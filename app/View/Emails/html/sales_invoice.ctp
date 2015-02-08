@@ -23,105 +23,163 @@
 										
 									     	<td class="headerContent1">
                                             
-                                     <div style="font-size:30px; margin-left:6px; color:black; padding:15px;">_______N&deg;_______</div>
-									
-											
-									<div style=" width:240px; padding:12px; border:1px solid #000000; margin-left:22px;">
-                                          <div style=" font-weight:bold; font-size:17px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										   CUSTOMER INFO
-										   </div>
-										   
-										   <div style=" font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										   Nome :&nbsp;<?php echo $posSale['PosCustomer']['name'];?>
-										   </div>
-										   
-										   <div style="font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										  Cognome :&nbsp;<?php echo $posSale['PosCustomer']['contactname'];?>
-										   </div>
-										   <div style="font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										   Azienda :&nbsp;<?php echo $posSale['PosCustomer']['address'];?>
-										   </div>
-										   <div style="font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										  CF/P.IVA :&nbsp;<?php echo $posSale['PosCustomer']['iva'];?>
-										   </div>
-										   <div style=" font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										  indirizzo :&nbsp;<?php echo $posSale['PosCustomer']['address'];?>
-										   </div>
-										   <div style=" font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										 E-mail :&nbsp;<?php echo $posSale['PosCustomer']['email'];?>
-										   </div>
-										   <div style="font-weight:normal; font-size:15px; font-family:'Times New Roman', Times, serif; margin-right:15px;">
-										 Telefono :&nbsp;<?php echo $posSale['PosCustomer']['tnt'];?>
-										   </div>
-										   </div>
-                                            
-                                            </td>
-											
-											
-                                            <td class="headerContent">
-                                            
-                                            <div style="font-size:30px; color:#336699; padding:15px; text-decoration:underline;"> PreCall</div>
-                                            <div style="height:2px; background:#000000; width:100%">&nbsp;</div>
-                                            
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <!-- // End Template Header \\ -->
-                                </td>
-                            </tr>
-                        	<tr>
-                            	<td align="center" valign="top">
-                                    <!-- // Begin Template Body \\ -->
-                                	<table border="0" cellpadding="0" cellspacing="0" width="800" id="templateBody" >
-                                    	<tr>
-                                            <td valign="top">
-                                
-                                                <!-- // Begin Module: Standard Content \\ -->
-                                                <table border="0" cellpadding="20" cellspacing="0" width="100%">
-                                                    <tr>
-                                                        <td valign="top" class="bodyContent">
-                                                            <div mc:edit="std_content00">
-                                                                <h4 class="h4">Thank you for Purchase!</h4>
-                                                              <p>Dear
-														   <?php echo $_SESSION['Auth']['User']['firstname'];?></p>
-                                                              
-                                                              <h4 class="h4">Card  Details</h4>
-                                                              <ul>
-                                                                <li><strong>Card number:</strong><?php echo $cardinfo['Card']['card_num'];?></li>
-																<?php /*?><li><strong>Last Name:</strong><?php echo $cardinfo['User']['lastname'];?></li><?php */?>
-																<li><strong>Card Password:</strong><?php echo $cardinfo['Card']['password'];?></li>
-																<li><strong>Card Amount :</strong><?php echo $cardinfo['Card']['balance'];?></li>
-																
-                                                              </ul>
-									 
+                                            <div class="full_div_report_wrapper">
 
-<div class="Payemnt_show">
-<div class="show_title" style="font-weight:bold">Payment Info</div>
+<div class="sec_div_wrapper">
 
- <?php 	if($cardinfo['BuyCard']['payment_method'] != 1){?>
-             <div class="BuyCardPaymentMethod<?php echo $cardinfo['BuyCard']['payment_method']; ?>">&nbsp;</div>
-			 
- 		<?php }
-		else if($cardinfo['BuyCard']['payment_method'] == 1){?>
-              <div class="BuyCardPaymentMethod<?php echo $cardinfo['BuyCard']['payment_method']; ?>">&nbsp;</div>
-		<?php } ?>
- <br />        
-<?php if($cardinfo['BuyCard']['payment_method'] != 1){
-	
-	echo 'Authorization : ' . $cardinfo['BuyCard']['authorization'].'<br /><br />';
-	echo 'transaction : ' . $cardinfo['BuyCard']['transaction'] .'<br /><br />'; 
-	
-	  }else{
-	echo 'Token : ' . $cardinfo['BuyCard']['token'] .'<br /><br />';
-	echo 'PayerID : ' . $cardinfo['BuyCard']['PayerID'] .'<br /><br />'; 
-	
-	  }?>
+<div class="company_title_div">
+
+        <div class="logo_div">
+       			
+                 <span class='Print_Button'><span class='print_img'>&nbsp;&nbsp;</span> &nbsp;Print</span>
+        </div>
+        
+        <div class="company_title">
+        
+          
+            <div class="title_div_logo"><h2 style="font-weight:bold; font-size:25px; text-decoration:underline">FATTURA</h2></div>
+             <div class="title_logo_right"><?php  echo $this->Html->image('wpage/spr/logo.png', array("alt" => "No Image","width"=>"230" ,"height"=>"80","border"=>"0",'url' => array('controller' => '#', 'action' =>'#')));?></div>
+        
+        </div>
+        
+        
+</div>
+<div class="customer_info_div">
+  <div class="customer_left_div">
+    <h2 class="customer_heading">Customer Info</h2>
+    <div class="customer_info_p">
+      <p><span style="font-weight:bold">Nome</span> : <?php echo $posSale['PosCustomer']['name'];?></p>
+      <p><span style="font-weight:bold">Cognome :</span><?php echo $posSale['PosCustomer']['contactname'];?></p>
+      <p><span style="font-weight:bold">Azienda :</span><?php echo $posSale['PosCustomer']['companyname'];?></p>
+	   <p><span style="font-weight:bold">CF/P.IVA : </span><?php echo $posSale['PosCustomer']['iva'];?></p>
+	   <p><span style="font-weight:bold">indirizzo :</span><?php echo $posSale['PosCustomer']['address'];?></p>
+	     <p><span style="font-weight:bold">E-mail : </span><?php echo $posSale['PosCustomer']['email'];?></p>
+      <p><span style="font-weight:bold">Telefono : </span><?php echo $posSale['PosCustomer']['tnt'];?></p>
+     
+    </div>
+  </div>
+  <div class="customer_right_div">
+    <h2 class="company_heading_right">SOLUTION POINT ROMA</h2>
+    <div class="customer_info_right">
+      <p> Via Dei Fulvi,14</p>
+      <p> 00174 Roma - Italia</p>
+      <p> Telefono +39 06 60672975</p>
+      <p> P.IVA IT12134951008</p>
+      <p> www.solutionpointroma.it</p>
+      <p> skype_solution_point</p>
+    </div>
+  </div>
+</div>
+<div class="product_table_div">
+    <table width="480" border="0"   class="product_table" cellspacing="0" cellpadding="0">
+    <tbody>
+      <tr>
+        <td height="20" class="captionLeft" >&nbsp;Data</td>
+        <td height="20" class="captionLeft" >&nbsp;Metodo di pagamento</td>
+        <td height="20" class="captionLeft" >&nbsp;Stato pagamento</td>
+        <td height="20" class="captionLeft" >&nbsp;Stato preparazione</td>
+       
+      </tr>
+      <tr>
+        <td height="20" class="captionLeft" >&nbsp;<span><?php echo date("j-n-Y H:i",strtotime($posSale['PosSale']['created']));?></span></td>
+        <td height="20" class="captionLeft" >&nbsp;<span><?php echo $posSale['PosSale']['id'];?></span></td>
+        <td height="20" class="captionLeft" >&nbsp;<span><?php if($posSale['PosCustomerLedger'][0]['account_head_id'] !=3){ echo 'Bank';}else{echo $accountsheads[$posSale['PosCustomerLedger'][0]['account_head_id']];}?></span></td>
+        <td height="20" class="captionLeft" >&nbsp;<span> <?php echo $this->Session->read('Auth.User.firstname');?> <?php echo $this->Session->read('Auth.User.lastname');?></span></td>
+       
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="full_data_div">
+  <section id="no-more-tables">
+    <?php /*?> <h3 class="invoice_h">Invoice no. <?php echo $posSale['PosSale']['id'];?></h3><?php */?>
+    <table class="table-bordered table-striped table-condensed cf">
+      <thead class="cf">
+        <tr>
+        
+      <th class="numeric" width="40">N&deg;</th>
+        <th class="numeric">Descrizione</th>
+        <th class="numeric" width="50">Quantita</th>
+        <th class="numeric" width="50">Prezzo</th>
+        <th class="numeric"  width="60">Totale</th>
+      </tr>
+      </thead>
+      
+      <tbody>
+        <?php 
+			$slno = 1;
+ 		foreach($posSale['PosSaleDetail'] as $saledetail){?>
+        <tr>
+          <td><?php echo $slno;?></td>
+          <td><?php echo $saledetail['PosProduct']['name'];
+			if(!empty($saledetail['PosBarcode'])){
+				echo "<div class='barcodesDiv'>Barcode: ";
+				foreach($saledetail['PosBarcode'] as $barcode)
+				{   
+					echo "<span class='barcodes'>".$barcode['barcode']."</span> , ";
+				}
+			}?></td>
+          <td><?php echo $saledetail['quantity'];?></td>
+          <td><?php echo $saledetail['price'];?></td>
+          <td><?php echo $saledetail['totalprice'];;?></td>
+        </tr>
+        <?php $slno ++;}?>
+      </tbody>
+      <thead class="cf">
+        <tr>
+          <th class="total_price"  width="60" colspan="4">SUBTOTAL =</th>
+          <th class="numeric"  width="60"><?php  	$amount=$posSale['PosSale']['totalprice'];
+	    echo $amount;
+	   ?>
+          </th>
+        </tr>
+        <tr>
+          <th class="total_price"  width="60" colspan="4">TAX (<?php echo $tax; ?>% )=</th>
+          <th class="numeric"  width="60"> <?php $peramount = $posSale['PosSale']['tax'];
+			  echo $peramount;
+		  ?></th>
+        </tr>
+        <tr>
+          <th class="total_price"  width="60" colspan="4">Total =</th>
+          <th class="numeric"  width="60"> <?php $taxamount=$peramount+$amount;
+			echo $taxamount;
+		?>
+          </th>
+        </tr>
+        <tr>
+          <th class="total_price"  width="60" colspan="4">Discount =</th>
+          <th class="numeric"  width="60"> <?php $payable_amount=$taxamount-$posSale['PosSale']['discount'];
+			echo  $posSale['PosSale']['discount'];
+		?></th>
+        </tr>
+        <tr>
+          <th class="total_price"  width="60" colspan="4">Paid =</th>
+          <th class="numeric"  width="60"> <?php echo $posSale['PosSale']['payamount'];?></th>
+        </tr>
+        <tr>
+          <th class="total_price"  width="60" colspan="4">Due =</th>
+          <th class="numeric"  width="60"> <?php $due=$payable_amount-$posSale['PosSale']['payamount'];
+		 	  echo $due;
+			//  die();
+	 	?>
+          </th>
+        </tr>
+      </thead>
+    </table>
+  </section>
+</div>
+ 
+
+
+
+</div>
 </div>
 
 
-
+                                            
+                                     
 <p><strong>Thanks again for your support! </strong></p>
-<p><em> The PreCall </em><br />
+<p><em> iripair </em><br />
   <br />
 </p>
                                                           </div>
@@ -133,7 +191,7 @@
                                                             	<tr>
                                                                 	<td valign="middle" class="templateButtonContent" style=" background:#4A7296; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;">
                                                                     	<div mc:edit="std_content01">
-                                                                        	<a href="http://www.precall.co.uk/" target="_blank" style="color:#ffffff; font-weight:bold;"> Precall Calling Card Service </a>
+                                                                        	<a href="http://www.iripair.org/" target="_blank" style="color:#ffffff; font-weight:bold;"> Iripair.org </a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -412,6 +470,233 @@
 				display:inline;
 				height:auto;
 			}
+			@charset "utf-8";
+/* CSS Document */
+
+h2.customer_heading{
+	font-weight:bold;
+	font-size:20px;
+	}
+h2.company_heading_right{
+	width:228px;
+	float:right;
+	font-weight:bold;
+	font-size:19px;
+	}
+.customer_left_div{
+	float:left;
+ 	padding:12px;
+	width:280px !important;
+	}
+.title_div_logo{
+    float: left;
+    width: 334px;
+	}
+.title_logo_right{
+    float: inherit;
+    margin-left: 138px;
+    width: 225px;
+	}
+.print_img{
+	   padding-right:10px;
+  }
+.Print_Button{
+   font-weight:bold;
+  }
+.full_div_report_wrapper {
+	height: 800px;
+	width: 740px;
+}
+.sec_div_wrapper {
+	height: 470px;
+	margin: auto;
+	width: 730px;
+}
+.logo_div {
+	float: right;
+	height: 60px;
+	width: 80px;
+}
+.company_title_div {
+	height: 150px;
+	width: 707px;
+}
+.company_title {
+	_height: 50px;
+	_width: 230px;
+	_float:right;
+    float: left;
+    height: 83px;
+}
+.company_title p {
+	font-size: 15px;
+	text-align:center;
+}
+.company_title h1 {
+	height:18px;
+	text-align:center;
+	font-family:LilyUPC;
+	font-size:35px;
+	
+}
+.customer_info_div {
+	_float: left;
+	height: 224px;
+	width: 728px;
+}
+.customer_info_div div {
+	_float: left;
+	height: auto;
+	width:395px;
+	margin-left:2px;
+}
+.customer_left_div p {
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Arial;
+	text-align: left;
+	font-size:9pt;
+	line-height:16px;
+}
+.customer_info_p {
+	height: 73px;
+	width: 265px !important;
+	margin-top:18px;
+}
+.customer_info_p p {
+	padding: 0 0 1px 6px;
+	line-height:20px;
+}
+.customer_right_div {
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Arial;
+	text-align: left;
+	font-size:8pt;
+	float:left;
+}
+.customer_right_div p {
+	padding: 0 0 1px 6px;
+	background-color: #FFFFFF;
+	color: #000000;
+	font-family: Arial;
+	text-align: left;
+	font-size:10pt;
+	line-height:20px;
+	font-weight:bold;
+}
+.customer_info_right {
+	width:233px !important;
+	float:right !important;
+}
+.customer_info_table {
+	float: right !important;
+	width: 300px !important;
+}
+th.captionMiddleLeft {
+	background-color: #DDDDDD;
+	color: #000000;
+	font-family: Arial;
+	font-size: 8pt;
+	text-align: left;
+	vertical-align: middle;
+	border:1px solid black;
+	text-align:center;
+}
+
+td.captionMiddleLeft {
+	border:1px solid black;
+	text-align:center;
+}
+td.captionLeft {
+ 	padding:4px;
+	border:1px solid black;
+}
+td.captionBorder {
+	border:1px solid black;
+	background-color: #DDDDDD;
+}
+
+.product_table_div {
+	width:730px;
+	height:75px;
+	float:left;
+}
+.full_data_div {
+	width:700px;
+	height:auto;
+	float:left;
+}
+
+.shippling_info_div{
+	width:700px;
+	height:auto;
+	float:left;
+	margin-top:20px;
+	}
+.table-bordered {
+	border: 1px solid #DDDDDD;
+	border-collapse: separate;
+	margin-top:12px;
+	width:100%;
+}
+.table-bordered th + th, .table-bordered td + td, .table-bordered th + td, .table-bordered td + th {
+	border-left:1px solid #DDDDDD;
+}
+.table-bordered thead:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child th, .table-bordered tbody:first-child tr:first-child td {
+	border-top:0 none;
+}
+.table-striped tbody tr:nth-child(2n+1) td, .table-striped tbody tr:nth-child(2n+1) th {
+	border:1px solid #ddd;
+}
+.table-condensed th, .table-condensed td {
+	padding: 4px 5px;
+	text-align:center;
+}
+td, th {
+	text-align: left;
+	white-space: nowrap;
+}
+h3.invoice_h {
+	font-size: 18px;
+	line-height: 27px;
+}
+th.numeric {
+	font-weight:bold;
+	text-align:center;
+}
+th.total_price {
+	font-weight:bold;
+	text-align:right;
+}
+.reviewer_div {
+	width:730px;
+	height:100px;
+	float:left;
+	margin-top:25px;
+	font-family:"Times New Roman", Times, serif;
+	font-size:20px;
+}
+p.review_p {
+	padding: 0 0 0 11px;
+	color: #000000;
+	font-family: Arial;
+	text-align: left;
+	font-size:8pt;
+}
+td.captionBorderBelow {
+	border:1px solid black;
+	background-color: #DDDDDD;
+	padding:6px;
+}
+td.captionShipping {
+	border:1px solid black;
+	background-color: #DDDDDD;
+	padding:6px;
+	text-align:center;
+}
+
+
 
 			/* /\/\/\/\/\/\/\/\/\/\ STANDARD STYLING: FOOTER /\/\/\/\/\/\/\/\/\/\ */
 

@@ -58,7 +58,7 @@
 
 
 <p><strong>Thanks again for your support! </strong></p>
-<p><em> The Solution Point Roma(SPR) </em><br />
+<p><em> The iripair </em><br />
   <br />
 </p>
                                                           </div>

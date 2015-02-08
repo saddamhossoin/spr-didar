@@ -3,24 +3,15 @@
 <head>
 <title>Report For SPR</title>
 <style type="text/css">
-.full_data_below{
-    font-family: times new roman;
-    font-size: 12px;
-    line-height: 22px;
-    padding: 10px;
-    width: 500px;
-}
+ 
 .print_img{
 	padding-right:10px;
 }
 .Print_Button{
    font-weight:bold;
 }
-.recive_fotter div{
-	float:left;
-	width:45%;
-	margin-left:15px;
-}
+ 
+ 
 </style>
 </head>
 
@@ -28,18 +19,20 @@
 <?php  //var_dump($deviceRecive);
   $data_important = array(0=>'No',1=>'Yes');?>
 	<div class="full_div_report_wrapper">
+    <span class='Print_Button'>
+    <span class='print_img'>&nbsp;&nbsp;</span> &nbsp;Print</span>
 		<div class="sec_div_wrapper">
-			<span class='Print_Button'>
-            <span class='print_img'>&nbsp;&nbsp;</span> &nbsp;Print</span>
-        	<div class="title_div_logo"> <?php echo $deviceRecive['ServiceDeviceInfo']['id']?></div>
-             <div style="margin-left:49px;"> &nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
-            <div style="margin-left:73px;"> &nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
-            <div style="margin-left:53px;"> &nbsp;<?php echo $deviceRecive['User']['email_address']; ?></div>
-            <div style="margin-left:110px; font-size: 9px;"> &nbsp; <?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
-            <div style="margin-left:44px; font-size: 9px;"> &nbsp; <?php echo $deviceRecive['ServiceDevice']['name'];?></div>
-            <div style="margin-left:36px; font-size: 9px;"> &nbsp; <?php	echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
+			
+          <div class="print_left">
+          <div class="bardoce_print"> <?php  echo $this->Html->image("../".$deviceRecive['ServiceDeviceInfo']['barcode_file'], array("class"=>"barcode","alt" => $deviceRecive['ServiceDeviceInfo']['barcode_file'] ));?> </div>
+              <div><span class="title_s">Nome </span>&nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
+            <div> <span class="title_s">Telefono </span>&nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
+            <div> <span class="title_s">Email </span>&nbsp;<?php echo $deviceRecive['User']['email_address']; ?></div>
+            <div> <span class="title_s">Marca/Modello </span>&nbsp; <?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
+            <div><span class="title_s">Product </span> &nbsp; <?php echo $deviceRecive['ServiceDevice']['name'];?></div>
+            <div><span class="title_s">IMEI </span> &nbsp; <?php	echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
              <div style="clear:both;"></div>
-            <div style="margin-left: 71px; font-size: 10px; height: 31px; width:267px;"> &nbsp;<?php
+            <div style="width:267px;"><span class="title_s">Accessori </span> &nbsp;<?php
                 if(!empty($deviceRecive['ServiceDeviceAcessory'])){
                     foreach($deviceRecive['ServiceDeviceAcessory'] as $accesorylist){
                         echo  $accesorylist['ServiceAcessory']['name']  ." , ";
@@ -48,7 +41,7 @@
                         echo 'Acessory not mention!!!';
             	}?>
         </div>
-            <div style="height: 44px; margin-bottom: 10px; font-size: 10px; margin-left: 53px; line-height: 13px; width:267px;"> &nbsp;
+            <div style="line-height: 13px;"><span class="title_s">Difetto </span> &nbsp;
 			<?php
 				if(!empty($deviceRecive['ServiceDeviceDefect'])){
 					foreach($deviceRecive['ServiceDeviceDefect'] as $defectlist){
@@ -59,55 +52,190 @@
 				}
 			?>
        </div>
-         
-    <div class="recive_fotter">
-	    <div>PREVENTIVO :&nbsp;<?php echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_customer_confirmation']]; ?></div>
-    	<div>STIMATO :&nbsp; <?php echo $deviceRecive['ServiceDeviceInfo']['estimated_budget']; ?></div>
-    </div>
-    <div class="recive_fotter">
-	    <div>RIENTRO :&nbsp;<?php  if(empty($is_repet)){ echo 'No';}else{ echo 'Yes';} ?></div>
-    	<div>PIN :&nbsp; <?php	echo $deviceRecive['ServiceDeviceInfo']['is_phone_block'] . " / ". $deviceRecive['ServiceDeviceInfo']['is_sim_pc_Lock'] ; ?></div>
-    </div>
-    
-    <div class="recive_fotter">
-    	<div>DATI IMPORTANTI :&nbsp;<?php 
-	   
-    	echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_data_backup']]; ?></div>
-    	<div>URGENT :&nbsp; <?php	echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_urgent']]; ?></div>
-    </div>
+       
+      <table width="200" border="0" cellpadding="0" cellspacing="0" class="prevnto_grid">
+  <tr>
+    <td>PREVENTIVO:</td>
+    <td align="center"><?php echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_customer_confirmation']]; ?></td>
+    <td>STIMATO:</td>
+    <td ><?php echo $deviceRecive['ServiceDeviceInfo']['estimated_budget']; ?></td>
+  </tr>
+  <tr>
+    <td>RIENTRO:</td>
+    <td align="center"><?php  if(empty($is_repet)){ echo 'No';}else{ echo 'Yes';} ?></td>
+    <td>PIN:</td>
+    <td> <?php	echo $deviceRecive['ServiceDeviceInfo']['is_phone_block'] . " / ". $deviceRecive['ServiceDeviceInfo']['is_sim_pc_Lock'] ; ?></td>
+  </tr>
+  <tr>
+    <td>DATI IMPORTANTI:</td>
+    <td align="center"><?php echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_data_backup']]; ?></td>
+    <td>URGENTE:</td>
+    <td><?php	 
+		if($deviceRecive['ServiceDeviceInfo']['is_urgent'] == 121){
+			echo 'Express Service';
+		}else{
+			echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_urgent']];
+		} ?></td>
+  </tr>
+</table>
+ 
+     
     <div style="clear:both">&nbsp;</div>
         
-    <div style="height: 100px; margin-left: 9px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;  <?php	echo $deviceRecive['ServiceDeviceInfo']['description']; ?> </div>
+    <div style="height: 100px; margin-left: 28px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;  <?php	echo $deviceRecive['ServiceDeviceInfo']['description']; 
+	//pr();
+	
+	?> </div>
+    <div class="inovice_fotter">
+    <span><?php echo $deviceRecive['User']['counter_name'];?> &nbsp; &nbsp;<?php echo date('d/m/y');?></span>
+    <span></span>
+          </div>
+       </div>   
+          <div class="print_right">
+          <div class="bardoce_print"> <?php  echo $this->Html->image("../".$deviceRecive['ServiceDeviceInfo']['barcode_file'], array("class"=>"barcode","alt" => $deviceRecive['ServiceDeviceInfo']['barcode_file'] ));?> </div>
+              <div><span class="title_s">Nome </span>&nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
+            <div> <span class="title_s">Telefono </span>&nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
+            <div> <span class="title_s">Email </span>&nbsp;<?php echo $deviceRecive['User']['email_address']; ?></div>
+            <div> <span class="title_s">Marca/Modello </span>&nbsp; <?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
+            <div><span class="title_s">Product </span> &nbsp; <?php echo $deviceRecive['ServiceDevice']['name'];?></div>
+            <div><span class="title_s">IMEI </span> &nbsp; <?php	echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
+             <div style="clear:both;"></div>
+            <div style="width:267px;"><span class="title_s">Accessori </span> &nbsp;<?php
+                if(!empty($deviceRecive['ServiceDeviceAcessory'])){
+                    foreach($deviceRecive['ServiceDeviceAcessory'] as $accesorylist){
+                        echo  $accesorylist['ServiceAcessory']['name']  ." , ";
+                        }
+                    }else{
+                        echo 'Acessory not mention!!!';
+            	}?>
+        </div>
+            <div style="line-height: 13px;"><span class="title_s">Difetto </span> &nbsp;
+			<?php
+				if(!empty($deviceRecive['ServiceDeviceDefect'])){
+					foreach($deviceRecive['ServiceDeviceDefect'] as $defectlist){
+						echo  $defectlist['ServiceDefect']['name']  ." , ";
+					}
+				}else{
+					echo 'Defect not mention!!!';
+				}
+			?>
+       </div>
+       
+      <table width="200" border="0" cellpadding="0" cellspacing="0" class="prevnto_grid">
+  <tr>
+    <td>PREVENTIVO:</td>
+    <td align="center"><?php echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_customer_confirmation']]; ?></td>
+    <td>STIMATO:</td>
+    <td ><?php echo $deviceRecive['ServiceDeviceInfo']['estimated_budget']; ?></td>
+  </tr>
+  <tr>
+    <td>RIENTRO:</td>
+    <td align="center"><?php  if(empty($is_repet)){ echo 'No';}else{ echo 'Yes';} ?></td>
+    <td>PIN:</td>
+    <td> <?php	echo $deviceRecive['ServiceDeviceInfo']['is_phone_block'] . " / ". $deviceRecive['ServiceDeviceInfo']['is_sim_pc_Lock'] ; ?></td>
+  </tr>
+  <tr>
+    <td>DATI IMPORTANTI:</td>
+    <td align="center"><?php echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_data_backup']]; ?></td>
+    <td>URGENTE:</td>
+    <td><?php	 
+		if($deviceRecive['ServiceDeviceInfo']['is_urgent'] == 121){
+			echo 'Express Service';
+		}else{
+			echo $data_important[$deviceRecive['ServiceDeviceInfo']['is_urgent']];
+		} ?></td>
+  </tr>
+</table>
+ 
+     
+    <div style="clear:both">&nbsp;</div>
+        
+    <div style="height: 100px; margin-left: 28px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;  <?php	echo $deviceRecive['ServiceDeviceInfo']['description']; 
+	//pr();
+	
+	?> </div>
+    <div class="inovice_fotter">
+    <span><?php echo $deviceRecive['User']['counter_name'];?> &nbsp; &nbsp;<?php echo date('d/m/y');?></span>
+    <span></span>
+          </div>  
+        	
+    </div>
        <style type="text/css">
-	   .recive_fotter div {
-			float: left;
-			margin-left: 15px;
-			width: 44%;
-			font-size:11px;
-		}
-	   .recive_fotter{
-	    clear:both;
- 		width:326px;
+	   .prevnto_grid{
+		   	border: 0 none;
+    		font-size: 10px;
+		    margin: 10px 15px 0 29px;
+    		text-transform: uppercase;
+    		width: 92%;
 	   }
-	   
-       .sec_div_wrapper {
+	   	   .prevnto_grid tr td{
+			   border-bottom:1px solid;
+			   width:25%;
+		   }
+		.inovice_fotter{
+ 			bottom: 0;
+			height: 14px;
+			margin-top: -11px;
+			padding-left: 47px;
+			position: unset;
+			width: 309px;
+			text-transform: none !important;
+			
+		}
+		.inovice_fotter span{
+			float:left;
+			display:inline-block;
+			width:49%;
+			text-align:center;
+		}
+	 
+		.sec_div_wrapper {
 			border: 1px solid;
-			height: 466px;
-			margin: auto;
-			width: 326px;
-			font-size:8px;
-			background-image:url(../../img/recive_background.jpg) ;
+			font-size: 8px;
+			height: 553px;
+			width: 795px;
+			background:url("../../app/webroot/img/iripair_invoice.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
 		}
 		.sec_div_wrapper div{
-			line-height:0px !important;
+			font-size:11px !important;
+			margin-left:30px;
+		   text-transform: uppercase;
 		}
-		.title_div_logo{
-			margin-left:44px;
-			margin-bottom:146px;
-			margin-top:17px;
+		 
+		.title_s{
+			width:100px;
+			display:inline-block;
+			text-transform:uppercase;
+			height:18px;
 		}
+		.barcode{
+			    height: 65px;
+    margin-bottom: 134px;
+    margin-left: -3px;
+    width: 152px;
+	margin-top:14px;
+		}
+		.print_left{
+		    float: left;
+    margin: 0 !important;
+	width:49%;
+		}
+		.print_right{
+		    float: left;
+    margin: 0 !important;
+	width:49%;
+		}
+		.print_right   div{
+			margin-left:25px !important;
+		}
+		.print_right .prevnto_grid{
+			margin-left:26px !important;
+		}
+
 		</style>
         </div>
+        
+        
 	</div>
 <script type="text/javascript">
 jQuery(function($){ 

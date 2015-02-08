@@ -255,7 +255,7 @@ class BarcodesController extends AppController {
 			$barcode->hideCodeType();
 			$barcode->setSize(40,210);
  
- 			$data_to_encode = "SPR$catename".sprintf('%04d', $maxNumber['0']['maxid']+1);
+ 			$data_to_encode = "Iripair$catename".sprintf('%04d', $maxNumber['0']['maxid']+1);
 			$barcode->setProductName($brand_name. ' ' .$product_name); 
 
 			$barcode->setCode($data_to_encode);
@@ -263,7 +263,7 @@ class BarcodesController extends AppController {
 			// Generate filename    
 			$maxNumberIt = sprintf('%04d', $maxNumber['0']['maxid']+1); 
 			   
-			$file = 'img/barcode/SPR'.$catename.''.$maxNumberIt.'.png';
+			$file = 'img/barcode/Iripair'.$catename.''.$maxNumberIt.'.png';
 			//echo $file;
 			$this->request->data['Barcode']['filename'] = $file;
 		
@@ -306,12 +306,12 @@ class BarcodesController extends AppController {
    for($i = 1; $i < $quantity+1  ; $i++){
  	   
 	  
-	   $data_to_encode = "SPR$catename-".$posProducts['PosProduct']['id']."-".sprintf('%04d', $maxNumber['0']['maxid']+$i);
+	   $data_to_encode = "Iripair$catename-".$posProducts['PosProduct']['id']."-".sprintf('%04d', $maxNumber['0']['maxid']+$i);
  	   $barcode->setProductName($posProducts['PosBrand']['name']. ' ' .$posProducts['PosProduct']['name']); 
 	   $barcode->setCode($data_to_encode);
 	   // Generate filename    
 	   $maxNumberIt = sprintf('%04d', $maxNumber['0']['maxid']+$i);       
-	   $file = 'img/barcode/SPR'.$catename.'-'.$posProducts['PosProduct']['id'].'-'.$maxNumberIt.'.png';
+	   $file = 'img/barcode/Iripair'.$catename.'-'.$posProducts['PosProduct']['id'].'-'.$maxNumberIt.'.png';
  	   
 	   // Generates image file on server           
 		  $barcode->writeBarcodeFile($file);
@@ -364,12 +364,12 @@ class BarcodesController extends AppController {
 			for($i = 1; $i < $this->request->data['Barcode']['number']+1; $i++){
 			
 			//echo $i;
-			$data_to_encode = "SPR$catename".sprintf('%04d', $maxNumber['0']['maxid']+$i);
+			$data_to_encode = "Iripair$catename".sprintf('%04d', $maxNumber['0']['maxid']+$i);
 			$barcode->setProductName($value['PosBrand']['name']. ' ' .$value['PosProduct']['name']); 
 			$barcode->setCode($data_to_encode);
 			// Generate filename    
 			$maxNumberIt = sprintf('%04d', $maxNumber['0']['maxid']+$i);       
-			$file = 'img/barcode/SPR'.$catename.''.$maxNumberIt.'.png';
+			$file = 'img/barcode/Iripair'.$catename.''.$maxNumberIt.'.png';
 			//echo $file;
 			$this->request->data['Barcode']['filename'] = $file;
 		

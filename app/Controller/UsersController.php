@@ -83,23 +83,107 @@ class UsersController extends AppController {
 		
 	}
 	
-  
+	//==================== Customer User ===================
+	public function customerFilterCondition($data=null)
+	{
+ 			 $customerConditionArray = '';
+			 $customerConditionArray .= $this->Filter->gfilter($data,'User');
+  			$this->request->data = $data;
+				if(!empty($this->request->data['User']['email_address']))
+				{
+					if(!empty($customerConditionArray))
+					{
+						$customerConditionArray .= " AND ";
+					}
+					$customerConditionArray .= 'User.email_address like \'%'.$this->request->data['User']['email_address']."%'";		
+					
+			 }
+			 if(!empty($this->request->data['User']['name']))
+				{
+					if(!empty($customerConditionArray))
+					{
+						$customerConditionArray .= " AND ";
+					}
+					$customerConditionArray .= 'User.name like \'%'.$this->request->data['User']['name']."%'";		
+ 			 }
+				 
+		return $customerConditionArray;	
+	}
+	
+	
+	public function customer_user($yes = null) {
+		
+		if( ! empty( $this->request->data ) ){
+		    $this->Session->delete('customeruserSearch');
+            $this->Session->write( 'customeruserSearch', $this->request->data );
+       	 }
+         if( $this->Session->check( 'customeruserSearch' ) ){
+             $this->request->data = $this->Session->read( 'customeruserSearch' );
+           }
+	  if($yes == 'yes')
+	   {
+			$this->Session->delete( 'customeruserSearch' );
+ 			$this->paginate  = array(
+ 				'limit' => '20',
+				'order' =>array('User.modified'=>'ASC'),
+				'conditions' =>  array('GroupsUser.group_id'=>6),
+				'joins' => array(
+									array(
+										'table' => 'mayasoftbd_groups_users',
+										'alias' => 'GroupsUser',
+										'type' => 'LEFT',
+										'conditions' => array(
+											'GroupsUser.user_id = User.id',
+										),
+									),
+  			));
+ 	   }
+	   $this->paginate  = array(
+    	        'conditions' =>  array($this->customerFilterCondition($this->request->data)  ,'GroupsUser.group_id'=>6),
+				'joins' => array(
+								array(
+									'table' => 'mayasoftbd_groups_users',
+									'alias' => 'GroupsUser',
+									'type' => 'LEFT',
+									'conditions' => array(
+										'GroupsUser.user_id = User.id',
+									),
+								),
+ 			));
+  		 
+		$this->set('users', $this->paginate());
+		$this->set('groups',$this->User->Group->find('list',array('conditions'=>array('Group.id'=>'6'))));
+		$this->set('sortoption',array('name'=>'name'));
+		$this->set('page_titles', 'User List'); 
+ 
+	}
+	
+  //====================  User List===================
 	public function filtercondition($data=null)
 	{
+			 
  			 $conditionarray = '';
 			 $conditionarray .= $this->Filter->gfilter($data,'User');
   			
-			if(!empty($this->request->data['User']['firstname']))
+			$this->request->data = $data;
+ 			 
+			if(!empty($this->request->data['User']['email_address']))
 				{
 					if(!empty($conditionarray))
 					{
 						$conditionarray .= " AND ";
 					}
-					$conditionarray .= 'User.firstname like \'%'.$this->request->data['User']['firstname']."%'";		
-					
-			 }
-				 
-		return $conditionarray;	
+					$conditionarray .= 'User.email_address like \'%'.$this->request->data['User']['email_address']."%'";		
+ 			 }
+			 if(!empty($this->request->data['User']['name']))
+				{
+					if(!empty($conditionarray))
+					{
+						$conditionarray .= " AND ";
+					}
+					$conditionarray .= 'User.name like \'%'.$this->request->data['User']['name']."%'";		
+ 			 }
+ 		return $conditionarray;	
 	}
    /**
     * index method
@@ -108,7 +192,7 @@ class UsersController extends AppController {
     */
 	public function index($yes = null) {
 		
-		if( ! empty( $this->request->data ) ){
+		 if( ! empty( $this->request->data ) ){
 		    $this->Session->delete('userSearch');
             $this->Session->write( 'userSearch', $this->request->data );
        	 }
@@ -120,23 +204,70 @@ class UsersController extends AppController {
 			$this->Session->delete( 'userSearch' );
  			$this->paginate  = array(
  				'limit' => '20',
-				'order' =>array('Group.name'=>'ASC'),
- 			);
-			//$this->request->data='';
+				'order' =>array('User.modified'=>'ASC'),
+				'conditions' =>  array('OR'=>array('GroupsUser.group_id =1',
+													'GroupsUser.group_id =3',
+													'GroupsUser.group_id =4',
+													'GroupsUser.group_id =5',
+													'GroupsUser.group_id =7',
+													'GroupsUser.group_id =8')),
+				'joins' => array(
+									array(
+										'table' => 'mayasoftbd_groups_users',
+										'alias' => 'GroupsUser',
+										'type' => 'LEFT',
+										'conditions' => array(
+											'GroupsUser.user_id = User.id',
+										),
+									),
+  			));
+			
+ 			 $this->request->data='';
 	   }
-  			$this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data) ),
-		            'limit' => $this->Filter->searchlimit($this->request->data , 'User'),
-					'order' =>array('Group.name asc'),
-        		);
-				//pr($this->request->data);
-			//pr($this->paginate());	
-	 	$this->LoadModel('Group');
-	 	$this->User->Group->unbindModel(array('hasAndBelongsToMany' => array('Permission')));
-		$this->User->recursive = 1;
-		 
-		$this->set('users', $this->paginate('Group'));
-		$this->set('sortoption',array('name'=>'name'));
+	    if($this->request->data){
+ 		$conditionarraygroup = array('OR'=>array('GroupsUser.group_id =1',
+													'GroupsUser.group_id =3',
+													'GroupsUser.group_id =4',
+													'GroupsUser.group_id =5',
+													'GroupsUser.group_id =7',
+													'GroupsUser.group_id =8'));
+													
+		 if(!empty($this->request->data['Group']['id']))
+			{
+				$conditionarraygroup = array('OR'=>array('GroupsUser.group_id ='.$this->request->data['Group']['id']));
+ 			}
+ 		 $this->paginate  = array(
+    	        'conditions' =>  array($this->filtercondition($this->request->data),$conditionarraygroup),
+				'joins' => array(
+								array(
+									'table' => 'mayasoftbd_groups_users',
+									'alias' => 'GroupsUser',
+									'type' => 'LEFT',
+									'conditions' => array(
+										'GroupsUser.user_id = User.id',
+									),
+								),
+ 			));
+  		} 
+		$users = $this->paginate();
+		$group_ids = array();
+		$user_list = array();
+		foreach($users as $user){
+			if($group_ids){
+				if(in_array($user['Group'][0]['id'], $group_ids)){
+					$user_list[$user['Group'][0]['id']]['User'][] = $user['User'];
+				}else{
+					$group_ids[]=$user['Group'][0]['id'];
+					$user_list[$user['Group'][0]['id']]['User'][] = $user['User'];
+				}
+			}else{
+				$group_ids[]=$user['Group'][0]['id'];
+				$user_list[$user['Group'][0]['id']]['User'][] = $user['User'];
+			}
+		}
+   		$this->set('users',$user_list );
+ 		$this->set('groups',$this->User->Group->find('list',array('conditions'=>array('id !=2'))));
+	 
 		$this->set('page_titles', 'User List'); 
  
 	}
@@ -301,7 +432,7 @@ class UsersController extends AppController {
 					 	
 						App::uses('CakeEmail', 'Network/Email');
 						$email = new CakeEmail();
-						$email->from("info@spr.com")
+						$email->from("romacinecitta@iriparo.com")
 						->to($this->request->data['User']['email_address'])
 						->subject('Successfully User Create')
 						->template('userregistration')
@@ -544,37 +675,21 @@ class UsersController extends AppController {
 	
 	$id = $this->Auth->user('id');
 	$this->loadModel('ServiceDeviceInfo');
-	$this->loadModel('PosCustomer');
-	$this->loadModel('DeviceCheckList');
-	
-	$this->ServiceDeviceInfo->bindModel(array('belongsTo' => array(
-			   'PosCustomer' => array(
-					'className' => 'PosCustomer',
-					'foreignKey' => 'pos_customer_id',
-					'type' => 'INNER'
-					)
-				)
-          ) );
+ 	$this->loadModel('DeviceCheckList');
+ 
 		  
 	
     $this->ServiceDeviceInfo->recursive =0;
 	
 	$response = $this->ServiceDeviceInfo->find('all',
-	array(	'fields'=>array('ServiceDeviceInfo.id','ServiceDeviceInfo.status','ServiceDeviceInfo.is_urgent','ServiceDeviceInfo.pos_customer_id','PosCustomer.name','ServiceDeviceInfo.serial_no','ServiceDeviceInfo.recive_date','ServiceDeviceInfo.estimated_date','ServiceDevice.name','User.name'),
-			'conditions'=> array('ServiceDeviceInfo.status'=>array(1,3,11,7,8))));
+	array(	'fields'=>array('ServiceDeviceInfo.id','ServiceDeviceInfo.status','ServiceDeviceInfo.is_urgent','ServiceDeviceInfo.serial_no','ServiceDeviceInfo.recive_date','ServiceDeviceInfo.estimated_date','ServiceDevice.name','User.name'),
+			'conditions'=> array('ServiceDeviceInfo.status'=>array(1,3,11,7,8),'ServiceDeviceInfo.is_urgent != 121')));
 	//pr($response);
 	 
 	$this->set('serviceDeviceInfoLists', $response);
-	
-	
-/*	$device_check_lists = $this->DeviceCheckList->find('all',array( 'conditions'=>array('DeviceCheckList.active'=>1)));
-	$this->set('device_check_lists',$device_check_lists);*/
-	
-	
+ 
 	$this->set('page_titles', 'Chief Dashboard'); 
-	
-	
-	}
+ 	}
 	
 	function techdashboard(){
 	$id = $this->Auth->user('id');

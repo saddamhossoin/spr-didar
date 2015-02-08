@@ -111,7 +111,7 @@ class AssesmentsController extends AppController {
 	 			// ->to($data['User']['email_address'])
 	  					 App::uses('CakeEmail', 'Network/Email');
 						$email = new CakeEmail();
-						$email->from("info@spr.com")
+						$email->from("romacinecitta@iriparo.com")
 								->to("saddamhossoin@gmail.com")
 								->subject('Assesment Invoice')
 								->template('assesment_invoice')
@@ -927,12 +927,13 @@ class AssesmentsController extends AppController {
 	  
 	  $this->ServiceDeviceInfo->recursive =2;
 	  $serviceDeviceInfo=$this->ServiceDeviceInfo->find('first',array('conditions'=>array('ServiceDeviceInfo.id'=>$id)));
+	//  pr($serviceDeviceInfo);die();
  	  $this->set('serviceDeviceInfo',$serviceDeviceInfo);
 	  
 	 			// ->to($data['User']['email_address'])
 	  					/*App::uses('CakeEmail', 'Network/Email');
 						$email = new CakeEmail();
-						$email->from("info@spr.com")
+						$email->from("romacinecitta@iriparo.com")
 								->to("rupom934106@gmail.com")
 								->subject('Assesment Invoice')
 								->template('assesment_invoice')

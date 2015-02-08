@@ -12,25 +12,25 @@
    <?php echo $this->Form->create('ServiceDeviceInfo',array('controller' => 'serviceDeviceInfos','action'=>'index' ));?>
    
   	 <div id="WrapperTestName" class="microcontroll">
+		<?php echo $this->Form->label('ServiceDeviceInfo.barcode_no', __('Barcode'.': <span class="star"></span>', true) ); ?>
+        <?php echo $this->Form->input('ServiceDeviceInfo.barcode_no',array('type'=>'text','div'=>false,'label'=>false, 'size'=>28 ));?>
+       
 		<?php echo $this->Form->label('ServiceDevice.name', __('Device'.': <span class="star"></span>', true) ); ?>
         <?php echo $this->Form->input('ServiceDevice.name',array('type'=>'text','div'=>false,'label'=>false, 'size'=>25 ));?>
        
         <?php echo $this->Form->label('ServiceDeviceInfo.serial_no', __('Serial'.': <span class="star"></span>', true) ); ?>
         <?php echo $this->Form->input('ServiceDeviceInfo.serial_no',array('type'=>'text','div'=>false,'label'=>false, 'size'=>25 ));?>
          <?php echo $this->Form->label('User.email_address', __('Email Address'.': <span class="star"></span>', true) ); ?>
-        <?php echo $this->Form->input('User.email_address',array('type'=>'text','div'=>false,'label'=>false, 'size'=>25 ));?>
-      
+        <?php echo $this->Form->input('User.email_address',array('type'=>'text','div'=>false,'required'=>'false','label'=>false, 'size'=>25 ));?>
+      </div>
+      <div id="WrapperTestName" class="microcontroll">
  		<?php echo $this->Form->label('ServiceDevice.name', __('Brand'.': <span class="star"></span>', true),array('id'=>'filtermodifyedby')  ); ?>
         <?php  echo $this->Form->input('ServiceDevice.pos_brand_id',array('type'=>'select','options'=>$posBrands,'div'=>false,'label'=>false,'class'=>'required select2as','empty'=>'----Please select Brand----'));    ?>
         
         <?php  echo $this->Form->label('ServiceDevice.name', __('Category'.': <span class="star"></span>', true),array('id'=>'filtermodifyedby')  );   
                echo $this->Form->input('ServiceDevice.pos_pcategory_id',array('type'=>'select','options'=>$posPcategories,'div'=>false,'label'=>false,'class'=>'required select2as','empty'=>'----Please select Category----'));  
         ?>
-        
-       
-      
-      
-        
+         
           <?php   echo $this->Form->label('ServiceDeviceInfo.name', __('Status'.': <span class="star"></span>', true),array('id'=>'filtermodifyedby')  );   	 echo $this->Form->input('ServiceDeviceInfo.status',array('type'=>'select','options'=>$status,'div'=>false,'label'=>false,'class'=>'required select2as','empty'=>'-- Select Status --'));  
 	  ?>
     </div>
@@ -51,16 +51,16 @@
     <table cellspacing="0" cellpadding="0" width="100%">
       <thead>
         <tr>
-            <th align="left" style=" width: 10%;"> <?php echo $this->Paginator->sort('user_id');?> </th>
-			<th align="left" style=" width: 6%;"> <?php echo $this->Paginator->sort('status');?> </th>
- 			<th align="left" style=" width: 15%;"> <?php echo $this->Paginator->sort('service_device_id');?> </th>
-            <th align="left" style=" width: 10%;"> <?php echo $this->Paginator->sort('ServiceDevice.pos_brand_id', 'Brand');?> </th>
-             <th align="left" style=" width: 10%;"> <?php echo $this->Paginator->sort('ServiceDevice.pos_pcategory_id', 'Category');?> </th>
+            <th align="left" style=" width: 15%;"> <?php echo $this->Paginator->sort('user_id');?> </th>
+			<th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('status');?> </th>
+ 			<th align="left" style=" width: 14%;"> <?php echo $this->Paginator->sort('service_device_id');?> </th>
+            <th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('barcode_no');?> </th>
+            <th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('ServiceDevice.pos_brand_id', 'Brand');?> </th>
+             <th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('ServiceDevice.pos_pcategory_id', 'Category');?> </th>
 			<th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('serial_no');?> </th>
- 			<th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('recive_date');?> </th>
-			<th align="left" style=" width: 8%;"> <?php echo $this->Paginator->sort('estimated_date');?> </th> 
-			 
-	           <th align="left" style=" width: 10%;"> <?php echo 'Link';?> </th>
+ 			<th align="left" style=" width: 6%;"> <?php echo $this->Paginator->sort('recive_date');?> </th>
+			<th align="left" style=" width: 6%;"> <?php echo $this->Paginator->sort('estimated_date');?> </th> 
+ 	        <th align="left" style=" width: 200%;"> <?php echo 'Link';?> </th>
         </tr>
       </thead>
     </table>
@@ -88,8 +88,10 @@
 	?>
     <?php //pr($serviceDeviceInfo);?>
 	<tr id='<?php echo 'row_'.$serviceDeviceInfo['ServiceDeviceInfo']['id'];?>'  <?php echo $class;?> >
-        <td align='left' style='width: 10%;' class="<?php if($serviceDeviceInfo['ServiceDeviceInfo']['is_urgent'] == 1){echo 'is_urgent';}?>" ><?php echo  $serviceDeviceInfo['User']['firstname'] .' '.$serviceDeviceInfo['User']['lastname']; ?></td>
-        <td align='left' style='width: 6%;'><?php  
+        <td align='left' style='width: 15%;' class="<?php if($serviceDeviceInfo['ServiceDeviceInfo']['is_urgent'] == 1){echo 'is_urgent';}?>" >
+		<?php echo  $serviceDeviceInfo['User']['firstname'] .' '.$serviceDeviceInfo['User']['lastname']; ?></td>
+        
+        <td align='left' style='width: 8%;'><?php  
 		
 		switch($serviceDeviceInfo['ServiceDeviceInfo']['status']){
 				case 1:
@@ -125,22 +127,20 @@
 				case 11:
 				 echo "<div class='link_view' id='check_complete'>Check List Complete</div>"; 
 				break;
-				
-				
-				
-				}
+ 				}
 		  ?>&nbsp;</td>
         
           
-        <td align='left' style='width: 15%;'><?php echo  $serviceDeviceInfo['ServiceDevice']['name'] ; ?></td>
-        <td align='left' style='width: 10%;'><?php echo  $posBrands[$serviceDeviceInfo['ServiceDevice']['pos_brand_id']] ; ?></td>
-        <td align='left' style='width: 10%;'><?php echo  $posPcategories[$serviceDeviceInfo['ServiceDevice']['pos_pcategory_id']] ;?>
+        <td align='left' style='width: 14%;'><?php echo  $serviceDeviceInfo['ServiceDevice']['name'] ; ?></td>
+        <td align='left' style='width: 8%;'><?php echo  $serviceDeviceInfo['ServiceDeviceInfo']['barcode_no'] ; ?></td>
+        <td align='left' style='width: 8%;'><?php echo  $posBrands[$serviceDeviceInfo['ServiceDevice']['pos_brand_id']] ; ?></td>
+        <td align='left' style='width: 8%;'><?php echo  $posPcategories[$serviceDeviceInfo['ServiceDevice']['pos_pcategory_id']] ;?>
         </td>
         <td align='left'  style='width: 8%;'><?php echo $serviceDeviceInfo['ServiceDeviceInfo']['serial_no']; ?>&nbsp;</td>
-        <td align='left'  style='width: 8%;'><?php echo date("d/m/Y H:i:s", strtotime($serviceDeviceInfo['ServiceDeviceInfo']['recive_date']));  ?>&nbsp;</td>
-        <td align='left' style='width: 8%;'><?php 
+        <td align='left'  style='width: 6%; font-weight:bold;'><?php echo date("d/m/Y H:i:s", strtotime($serviceDeviceInfo['ServiceDeviceInfo']['recive_date']));  ?>&nbsp;</td>
+        <td align='left' style='width: 6%;font-weight:bold;'><?php 
         echo date("d/m/Y H:i:s", strtotime($serviceDeviceInfo['ServiceDeviceInfo']['estimated_date'])); ?>&nbsp;</td> 
-        <td class="actions"  style='width: 10%;'>
+        <td class="actions"  style='width: 20%;'>
         <div class='alistname link_link'>
         <?php echo $this->Html->link(__('View', true), array('action' => 'view', $serviceDeviceInfo['ServiceDeviceInfo']['id']),array('class'=>'link_view action_link')); ?>
        

@@ -183,9 +183,9 @@
 				          	$this->set('ms', $ms);
 							 App::uses('CakeEmail', 'Network/Email');
 								$email = new CakeEmail();
-								$email->from("info@spr.com")
+								$email->from("romacinecitta@iriparo.com")
 								->to($userdata['User']['email_address'])
-								->subject('[SPR] Please Reset your password')
+								->subject('[Iripair] Please Reset your password')
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms))
@@ -304,9 +304,9 @@ true), 'fail_message');
 				          	$this->set('ms', $ms);
 							 App::uses('CakeEmail', 'Network/Email');
 								$email = new CakeEmail();
-								$email->from("info@spr.com")
+								$email->from("romacinecitta@iriparo.com")
 								->to($userdata['User']['email_address'])
-								->subject('[SPR] Please Reset your password')
+								->subject('[Iripair] Please Reset your password')
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms))

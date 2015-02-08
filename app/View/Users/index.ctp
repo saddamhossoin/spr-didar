@@ -11,12 +11,22 @@
        <?php echo $this->Form->create('User',array('action'=>'index' ));?>
        <div id="WrapperBrandName" class="microcontroll">
 	 <?php echo $this->Form->label('Group.name', __('Group Name'.': <span class="star"></span>', true) ); ?>
-	  <?php echo $this->Form->input('Group.name',array('type'=>'text','div'=>false,'label'=>false, 'size'=>35 ));?>  
+	  <?php  
+	   echo $this->Form->input('Group.id',array('type'=>'select','options'=>$groups,'div'=>false,'label'=>false,'class'=>' select2as','empty'=>'----Please select Groups----'));   
+	  
+	  ?>  
+      </div>
+       <div id="WrapperTestName" class="microcontroll">
+		<?php echo $this->Form->label('User.name', __('Name'.': <span class="star"></span>', true) ); ?>
+        <?php echo $this->Form->input('User.name',array('type'=>'text','div'=>false,'label'=>false, 'size'=>25 ));?>
+        <?php echo $this->Form->label('User.email_address', __('Email'.': <span class="star"></span>', true) ); ?>
+        <?php echo $this->Form->input('User.email_address',array('type'=>'text','div'=>false,'label'=>false,'class'=>'','required'=>false ));?>
+       
  		</div>
        <?php echo $this->element('filter/commonfilter',array('cache' => array('time'=> '-7 days','key'=>'header')));?>
         <div class="button_area_filter">
          
-          <?php echo $this->Form->button('Search',array( 'class'=>'submit', 'id'=>'btn_brand_search'));?>      <?php echo $this->Form->button('Reset',array('type'=>'reset','name'=>'reset','id'=>'Cancel', 'onClick'=>"parent.location='users/index/yes'"));?>     
+          <?php echo $this->Form->button('Search',array( 'class'=>'submit', 'id'=>'btn_brand_search'));?>      <?php echo $this->Form->button('Reset',array('type'=>'reset','name'=>'reset','id'=>'Cancel', 'onClick'=>"parent.location='".$this->webroot."users/index/yes'"));?>     
         </div>
         </form>
       </div>
@@ -29,16 +39,14 @@
                 <table cellspacing="0" cellpadding="0">
                     <thead>
                          <tr>
-                           
-         		            <th align="left" ><div style=" width: 100px;"><?php echo $this->Paginator->sort('id');?></div></th>
-                           <th align="left" ><div style=" width: 200px;"><?php echo $this->Paginator->sort('firstname');?></div></th>
- 
-                			<th align="left" ><div style=" width: 200px;"><?php echo $this->Paginator->sort('email_address');?></div></th>
- 
-                             <th align="left" ><div style=" width: 60px;"><?php echo $this->Paginator->sort('active');?></div></th>
-                            <th align="left" ><div style=" width: 100px;"><?php echo $this->Paginator->sort('active','Last Activity');?></div></th>
+          		           <th align="left" width="5%"><?php echo $this->Paginator->sort('id');?></th>
+                           <th align="left" width="25%"><?php echo $this->Paginator->sort('firstname');?></th>
+                 			<th align="left" width="25%"><?php echo $this->Paginator->sort('email_address');?></th>
+                            <th align="left" width="10%"><?php echo $this->Paginator->sort('counter_name');?></th>
+                            <th align="left" width="10%"><?php echo $this->Paginator->sort('active');?></th>
+                            <th align="left" width="10%"><?php echo $this->Paginator->sort('active','Last Activity');?></th>
                            <?php //if($this->Session->read('username')=='Admin' || $this->Session->read('username')=='SuperAdmin'){?>
-                            <th align="left" ><div style=" width: 180px;" class="link_text"><?php echo 'Link';?></div></th>
+                            <th align="left" class="link_text"><?php echo 'Link';?></th>
                             <?php //} ?>
                         </tr>
                     </thead>
@@ -50,30 +58,32 @@
             <tbody>
             <?php
              	$i = 0;
-             	foreach ($users as $user){
+				 
+             	foreach ($users as $key=>$user){
             		$class = null;
             		if ($i++ % 2 == 0) {
             			$class = ' class="altrow"';
             	    }
+				//	pr($user);
+					 
  					?>
                     <tr <?php echo $class;?>>
-                     <td align='left'><div style='width: 100%; font-weight:bold;' class='alistname'><?php echo h($user['Group']['name']); ?>&nbsp;</div></td>
+                     <td align='left' class='alistname' style="font-weight:bold;" colspan="8"><?php echo $groups[$key]; ?>&nbsp;</td>
                  </tr>
                     <?php	foreach($user['User'] as $use){?>
  	            <tr id="row_<?php echo $use['id'];?>"  <?php echo $class;?>>
                    	
-                    <td align='left'><div style='width: 72px;' class='alistname'><?php echo h($use['id']); ?>&nbsp;</div></td>
-					 <td align='left'><div style='width: 200px;' class='alistname'><?php  echo $use['firstname']." ".$use['lastname']; ?></div>
- 		           <td align='left'><div style='width: 200px;' class='alistname'><?php  echo h($use['email_address']); ?></div>
-			        </td>
+                     <td align='left' class='alistname' width="5%"><?php echo h($use['id']); ?>&nbsp;</td>
+					 <td align='left' class='alistname' width="25%"><?php  echo $use['firstname']." ".$use['lastname']; ?></td>
+                     <td align='left' class='alistname' width="25%"><?php  echo h($use['email_address']); ?></td>
+                     <td align='left' class='alistname' width="10%"><?php  echo h($use['counter_name']); ?></td>
                     
-                    <td  align="left"><div style='width: 60px;' class='alistname'><?php  
+                    <td  align="left" class='alistname' width="10%"><?php  
 					
 					if($use['active'] == 1){echo "Active";}else{ echo "Inactive";} ?></div></td>
                        
-                    <td align='left'><div style='width: 100px;' class='alistname'><?php echo h($use['modified']); ?>&nbsp;</div></td>
-            		<td class="actions">
-                        <div style='width: 180px;' class='alistname link_link'>			
+                    <td align='left' class='alistname' width="10%"><?php echo h($use['modified']); ?>&nbsp;</div></td>
+            		<td class="actions" class='alistname link_link' >			
                             <?php
 							 if((in_array($generalpermit,$permissions) || in_array($this->params['controller'].":edit",$permissions) )&& $this->params['action']!='edit') {
 							 echo $this->Html->link(__('View'), array('action' => 'view', $use['id']),array('class'=>'link_view action_link'));} ?>
@@ -91,20 +101,22 @@
             </tbody>
         </table>
     </div>
-    
-    <div class="pDiv">
+     <div class="pDiv">
         <div class="pGroup">
          	<?php 
-			//pr($this->request->params['paging']);die();
-			if($this->request->params['paging']['Group']['prevPage']){?>
+			// pr($this->request->params);die();
+			if($this->request->params['paging']['User']['prevPage']){?>
             <span class='paginate_link'><?php echo $this->Paginator->first();?></span> <span class='paginate_link'><?php echo $this->Paginator->prev('< ' . __('Previous'), array(), null, array('class'=>'disabled','id'=>'prev_id'));?></span>
             <?php }?>
             <?php echo $this->Paginator->numbers();?>
-            <?php if($this->request->params['paging']['Group']['nextPage']){?>
+            <?php if($this->request->params['paging']['User']['nextPage']){?>
                 <span class='paginate_link'> <?php echo $this->Paginator->next(__('Next') . ' >', array(), null, array('class' => 'disabled','id'=>'next_id', 'span'=>false));?> </span> <span class='paginate_link'><?php echo $this->Paginator->last();?></span>
             <?php }?>
         </div>
     </div>     
+</div>
+    
+          
 </div>
 
 

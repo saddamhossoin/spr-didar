@@ -73,11 +73,12 @@
   <table cellspacing="0" cellpadding="0" border="0" style="" class="flexme3">
       <tbody>
 <?php
+  //pr($assessment_lists);die();
     $purchaseDate = '';
 	$i = 0;
 	foreach ($assessment_lists as $assessment_list):
 	
-	  // pr($assessment_list);
+	 
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
@@ -157,7 +158,11 @@
 		<td align='left' class='alistname' width="12%"> <?php echo $assessment_list['PosCustomer']['name']; ?>&nbsp; </td>
 		<td align='left' class='alistname' width="11%"> <?php echo $assessment_list['ServiceDevice']['name']; ?>&nbsp; </td>
         <td align='left' class='alistname' width="11%"> <?php echo $assessment_list['ServiceDeviceInfo']['serial_no']; ?>&nbsp; </td>
-         <td align='left' class='alistname' width="12%"> <?php echo $assessment_list['Assesment']['tech_name']; ?>&nbsp; </td>
+         <td align='left' class='alistname' width="12%"> <?php 
+		 if($assessment_list['ServiceDeviceInfo']['status'] == 1){
+		 echo $assessment_list['UserModified']['firstname']." ".$assessment_list['UserModified']['lastname'];
+		 }else{
+		 echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];} ?>&nbsp; </td>
         <td align='left' class='alistname' width="6%"> <?php echo $assessment_list['ServiceInvoice']['inventory_total']; ?>&nbsp; </td>
         <td align='left' class='alistname' width="6%"> <?php echo $assessment_list['ServiceInvoice']['service_total']; ?>&nbsp; </td>
          <td class="actions" width="19%" class='alistname link_link'> 
@@ -192,7 +197,7 @@
     <div class="pDiv">
     <div class="pGroup">
      	 <?php if($this->params['paging']['ServiceDeviceInfo']['prevPage']){?>
-      <span class='paginate_link'><?php echo $paginator->first();?></span> <span class='paginate_link'><?php echo $this->Paginator->prev('< ' . __('Previous', true), array(), null, array('class'=>'disabled','id'=>'prev_id'));?></span>
+      <span class='paginate_link'><?php echo $this->Paginator->first();?></span> <span class='paginate_link'><?php echo $this->Paginator->prev('< ' . __('Previous', true), array(), null, array('class'=>'disabled','id'=>'prev_id'));?></span>
       <?php }?>
       <?php echo $this->Paginator->numbers();?>
       <?php if($this->params['paging']['ServiceDeviceInfo']['nextPage']){?>

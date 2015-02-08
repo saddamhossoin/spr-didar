@@ -410,105 +410,96 @@ public function customerlist(  $search_data = null , $val=null) {
 
 	function add() {
      if ($this->RequestHandler->isAjax()) {	
-	 /* $this->request->data =array('PosSale' => array(
-            'pos_customer_id' => 58,
-            'user_id' => 201,
-            'email_address' => "saddamhossoin1@gmail.com",
-            'name' => "jowel Test",
-            'phone' => "01554319208",
-            'companyname' => "",
-            'purchase_date' => "2015-01-19 01:01:47",
-            'piva' => "4037",
-            'address' => "Address",
+	/*  $this->request->data =array( 'PosSale' => 
+	  array(
+            'pos_customer_id' => 45,
+            'user_id' => 175,
+            'email_address' =>' saddamhossoin@gmail.com',
+            'name' => 'MD Saddam Hossain majumder',
+            'phone' => '01554319208',
+            'companyname' => '',
+            'purchase_date' => '2015-02-03 12:02:03',
+            'piva' => 'ka-2598',
+            'address' => "52/6 East Raja Bazar, Pantho-path dhaka. Bangladesh."
         ),
 
     'PosSaleAmount' => array
         (
-            'totalprice' => 2302.50,
-            'tax' => 0.00,
-            'is_tax' => 1,
-            'discount' => 324.00,
+            'totalprice' => 1569.00,
+            'tax' => 345.18,
+            'is_tax'=> 0,
+            'discount' => 10.00,
             'transport' => 0.00,
             'others_fee' => 0.00,
-            'payable_amount' => 1978.50,
+            'payable_amount' => 1904.18,
             'payamount' => 1900.00,
-            'accountHead' => 3,
+            'accountHead' => 3
         ),
+		
 
     'PosSaleDetail' => array
         (
-            '3240' => array
+		 5052 => array
                 (
-                    'pos_product_id' => 3240,
-                    'pos_brand_id' => 18,
-                    'pos_pcategory_id' => 27,
-                    'quantity' => 1,
-                    'price' => 199,
-                    'totalprice' => 199,
-                    'PosBarcode' => array
-                        (
-                            '0' => "SPRSMA-3240-0004",
-                            '1' => "SPRSMA-3240-0005",
-                            '2' => "SPRSMA-3240-0006"
-                        )
-
-                ),
-
-            '3254' => array
-                (
-                    'pos_product_id' => 3254,
-                    'pos_brand_id' => 18,
-                    'pos_pcategory_id' => 27,
-                    'quantity' => 1,
-                    'price' => 105,
-                    'totalprice' => 105,
-                    'PosBarcode' => array
-                        (
-                            '0' => "SPRSMA-3254-0006"
-                        )
-
-                ),
-
-            '3157' => array
-                (
-                    'pos_product_id' => 3157,
-                    'pos_brand_id' => 18,
-                    'pos_pcategory_id' => 27,
-                    'quantity' => 1,
-                    'price' => 399,
-                    'totalprice' => 399,
-                    'PosBarcode' => array
-                        (
-                            '0' => "SPRSMA-3157-0001",
-                            '1' => "SPRSMA-3157-0002",
-                            '2' => "SPRSMA-3157-0003",
-                            '7' => "SPRSMA-3157-0005",
-                        )
-
-                ),
-
-            '1974' => array
-                (
-                    'pos_product_id' => 1974,
+                    'pos_product_id' => 5052,
                     'pos_brand_id' => 19,
-                    'pos_pcategory_id' => 21,
-                    'quantity' => 5,
-                    'price' => 0.9,
-                    'totalprice' => 4.5,
+                    'pos_pcategory_id' => 27,
+                    'quantity' => 1,
+                    'price' => 140,
+                    'totalprice' => 140,
+                    'PosBarcode' => array
+                        (
+                            0 => 'IripairSMA-5052-0016',
+                            1 => 'IripairSMA-5052-0017',
+                            3 => 'IripairSMA-5052-0018'
+                        )
+
+                ),
+            811 => array
+                (
+                    'pos_product_id' => 811,
+                    'pos_brand_id' => 19,
+                    'pos_pcategory_id' => 27,
+                    'quantity' => 1,
+                    'price' => 150,
+                    'totalprice' => 150,
+                    'PosBarcode' => array
+                        (
+                            0 => 'IripairSMA-811-0009',
+                        )
+
+                ),
+
+           
+
+            7159 => array
+                (
+                    'pos_product_id' => 7159,
+                    'pos_brand_id' => 66,
+                    'pos_pcategory_id' => 30,
+                    'quantity' => 3,
+                    'price' => 333,
+                    'totalprice' => 999,
                 )
-         )
+
+        )
+
+
+
          );*/
+		   // pr($this->request->data);die();
 		$this->loadModel("PosSaleDetail");
 		 if (!empty($this->request->data)) {
-		 			
-					$userdata['User']['email_address']=$this->request->data['PosSale']['email_address'];
-					$userdata['User']['firstname'] = $this->request->data['PosSale']['name'];
-					$userdata['User']['phone'] = $this->request->data['PosSale']['phone'];
-		 			$userdata['User']['piva'] = $this->request->data['PosSale']['piva'];
-					$userdata['User']['address'] = $this->request->data['PosSale']['address'];
-					$userdata['User']['companyname'] = $this->request->data['PosSale']['companyname'];
-					$userdata['User']['type_of_user'] = 4;
-					$userdata['User']['active'] = 1;
+		 		
+				//==================== 	
+				$userdata['User']['email_address']=$this->request->data['PosSale']['email_address'];
+				$userdata['User']['firstname'] = $this->request->data['PosSale']['name'];
+				$userdata['User']['phone'] = $this->request->data['PosSale']['phone'];
+				$userdata['User']['piva'] = $this->request->data['PosSale']['piva'];
+				$userdata['User']['address'] = $this->request->data['PosSale']['address'];
+				$userdata['User']['companyname'] = $this->request->data['PosSale']['companyname'];
+				$userdata['User']['type_of_user'] = 4;
+				$userdata['User']['active'] = 1;
 		  	
 				
 				
@@ -526,6 +517,7 @@ public function customerlist(  $search_data = null , $val=null) {
 				
 					$this->loadModel('User');
 					$this->request->data['PosCustomer'];
+				
 				//{================New customer Add start======================		
 				 if(empty($this->request->data['PosSale']['pos_customer_id'])){
 				 
@@ -543,7 +535,7 @@ public function customerlist(  $search_data = null , $val=null) {
 								$this->request->data['PosCustomer']['user_id']= $userid;
 		 						//{==== mail notification for password Entry Start =====================//
 										 
-				  	 $fu=$this->User->find('first',array('conditions'=>array('User.email_address'=>$userdata['User']['email_address'])));
+				  	 $fu=$this->User->find('first',array('conditions'=>array('User.email_address'=>$userdata['User']['email_address'],'recursive'=>-1)));
 			 		if($fu)  {
 					 
 			        if($fu['User']['active'])
@@ -558,20 +550,20 @@ public function customerlist(  $search_data = null , $val=null) {
 				          	$this->set('ms', $ms);
 							 App::uses('CakeEmail', 'Network/Email');
 								$email = new CakeEmail();
-								$email->from("info@spr.com")
+								$email->from("romacinecitta@iriparo.com")
 								->to($userdata['User']['email_address'])
-								->subject('[SPR] Please Reset your password')
+								->subject('[Iripair] Please Reset your password')
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms));
-								 
-                         	 if ($email->send("Hey, we heard you lost your SolutionPointRoma password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>The SolutionPointRoma Team")) {
+							//============== Send Email ==============	 
+                      /*   	 if ($email->send("Hey, thank you for your purchase. you can buy our online product. Please reset your iripair.org password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>The iripair Team")) {
 							 $successa = 1;
 					  	 $this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
                } else {
                   		 $this->Session->setFlash(__('Failed to send the confirmation email. Please contact the administrator at support@xxx',
 true), 'fail_message');
-               } 
+               }*/ 
 			   	    //============EndEmail=============//
                         }
                         else{
@@ -641,12 +633,13 @@ true), 'fail_message');
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms));
-                          	 if ($email->send("Hey, we heard you lost your SolutionPointRoma password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>The SolutionPointRoma Team")) {
+								//============== Send Email ==============
+                          	/* if ($email->send("Hey,thank you for your purchase. you can buy our online product. Please reset your iripair.org password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>The iripair Team")) {
 					  	 $this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
                } else {
                   		 $this->Session->setFlash(__('Failed to send the confirmation email. Please contact the administrator at support@xxx',
 true), 'fail_message');
-               } 
+               } */
 			   	    //============EndEmail=============//
                         }
                         else{
@@ -683,20 +676,20 @@ true), 'fail_message');
 				          	$this->set('ms', $ms);
 							 App::uses('CakeEmail', 'Network/Email');
 								$email = new CakeEmail();
-								$email->from("info@spr.com")
+								$email->from("romacinecitta@iriparo.com")
 								->to($userdata['User']['email_address'])
- 								->subject('[SPR] Please Reset your password')
+ 								->subject('[Iripair] Please Reset your password')
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms));
-								 
-                         	 if ($email->send("Hey, we heard you lost your SolutionPointRoma password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>The SolutionPointRoma Team")) {
+							//============== Send Email ==============	 
+                         	/* if ($email->send("Hey, thank you for your purchase. you can buy our online product. Please reset your iripair.org  password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>The iripair Team")) {
 					  	
 $this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
                } else {
 $this->Session->setFlash(__('Failed to send the confirmation email. Please contact the administrator at support@xxx',
 true), 'fail_message');
-               } 
+               } */
 			   	    //============EndEmail=============//
                         }
                         else{
@@ -742,16 +735,13 @@ true), 'fail_message');
 			$this->request->data['PosSale']['is_tax']=$this->request->data['PosSaleAmount']['is_tax'];
 			$this->request->data['PosSale']['sales_type']=1;
 		 
- 				$this->PosSale->create();
+ 			$this->PosSale->create();
 			if ($this->PosSale->save($this->request->data)) {
-			
-			
-				//---------------------------------------------///
-						$lastid=$this->PosSale->getLastInsertId(); 
-		  	 	/////////-----------------------------------/////////////////
-			 		$lid = $this->PosSale->getLastInsertId();
-					
-					$cost_products = 0;
+			//=============== Get Sales Id =============
+				$lastid=$this->PosSale->getLastInsertId(); 
+		  	 	$lid = $this->PosSale->getLastInsertId();
+				
+				$cost_products = 0;
 				 		
 			 foreach($this->request->data['PosSaleDetail'] as $pddatas){
 			 
@@ -769,12 +759,13 @@ true), 'fail_message');
 					if(array_key_exists("PosBarcode",$pddatas)){
 						$pddatas ['quantity'] = count($pddatas['PosBarcode']);
 					}
-
-				 	$this->PosSaleDetail->create();
+					
+					$this->PosSaleDetail->create();
 					if($this->PosSaleDetail->save($pddatas)){
-					 	$last_sales_detail_id = $this->PosSaleDetail->getLastInsertId();
+					 	
+						$last_sales_detail_id = $this->PosSaleDetail->getLastInsertId();
 				 		
-						if(isset($pddatas['PosBarcode'])){
+				if(isset($pddatas['PosBarcode'])){
 							if(!empty($pddatas['PosBarcode'])){
 		 					
 						$solid_product_test=$this->PosProduct->find('first',array('recursive'=>-1,'fields'=>array('id','pos_type_id'),'conditions'=>array('PosProduct.id'=>$pddatas['pos_product_id'])));
@@ -784,7 +775,7 @@ true), 'fail_message');
 								 //==================== Save Barcode =================
 								
 						 foreach($pddatas['PosBarcode'] as $key=>$barcode_val)
-										{ 
+							{ 
 							 	 $this->PosBarcode->updateAll(array('PosBarcode.is_sold'=>1,'PosBarcode.pos_sale_detail_id'=>$last_sales_detail_id),array('PosBarcode.barcode'=>$barcode_val,'PosBarcode.pos_product_id'=>$pddatas['pos_product_id']));
 						
 								$product_detail_id=$this->PosBarcode->find('first',array('recursive'=>-1,'fields'=>array('pos_product_id','pos_purchase_detail_id'),'conditions'=>array('PosBarcode.barcode'=>$barcode_val)));
@@ -793,7 +784,9 @@ true), 'fail_message');
 								
 								$product_purchase_price = $this->PosPurchaseDetail->find('first',array('conditions'=>array('PosPurchaseDetail.id'=>$product_detail_id['PosBarcode']['pos_purchase_detail_id'],'PosPurchaseDetail.pos_product_id'=>$pddatas['pos_product_id'])));
 								 $cost_products += $product_purchase_price['PosPurchaseDetail']['price'];
+								
 						 	}
+							
 							
 		//$this->PosSaleDetail->updateAll(array('PosSaleDetail.cgs'=>$cost_products),array('PosSaleDetail.id'=>$last_sales_detail_id));
 							
@@ -802,7 +795,10 @@ true), 'fail_message');
 								}		
 					 }
 			 	}
+				
 		 	 	else { 
+				 
+							
 					   
 		 			 $product_quantity = $this->PosPurchaseDetail->find('all',array('recursive'=>-1,'order' => 'PosPurchaseDetail.id ASC','conditions'=>array('PosPurchaseDetail.free_quantity >'=>0,'PosPurchaseDetail.pos_pcategory_id'=>$pddatas['pos_pcategory_id'],'PosPurchaseDetail.pos_product_id'=>$pddatas['pos_product_id'])));
 					 $sales_quantity = $pddatas['quantity'];
@@ -849,14 +845,15 @@ true), 'fail_message');
 				 	 //========================= without Barcode CGS calculate End ================//  
 			  	 }
 			  }
+			  
 				 
 				  		 $this->PosStock->updateAll(array('PosStock.quantity' =>'PosStock.quantity'."-".$pddatas['quantity'],'PosStock.last_sales' =>$pddatas['price']),array('PosStock.pos_product_id'=>$pddatas['pos_product_id']));
 					 	
 					}
 						
 			  }
-			 
-			  
+			
+			//========================== Account Section Start Here ================  
 			  	$this->loadModel("PosCustomerLedger");	
 			 	$this->request->data['PosCustomerLedger']['payment_mode']=1;
 				$this->request->data['PosCustomerLedger']['debit_credit']=1;
@@ -868,8 +865,8 @@ true), 'fail_message');
 				$this->request->data['PosCustomerLedger']['amount']=$this->request->data['PosSaleAmount']['payable_amount'];
 				
 			 $this->PosCustomerLedger->create();
-				if($this->PosCustomerLedger->save($this->request->data['PosCustomerLedger'])){	
-					
+			if($this->PosCustomerLedger->save($this->request->data['PosCustomerLedger'])){	
+				
 			//===================== Inventrory Accounts Entry  ================= //
 				$this->loadModel("AccountsLedgerTransaction");
 				$jurnalId = $this->AccountsLedgerTransaction->manageJurnalId('SV');
@@ -979,17 +976,19 @@ true), 'fail_message');
 			
 			
 			}
+			
 			       //============Email================//
 				          	//$this->set('ms', $ms);
 							
 				
 				echo $lastid;
-				$this->PosSale->send_invoice( $lastid );
+				
+				//$this->PosSale->send_invoice( $lastid );
 								
 			
 			   	    //============EndEmail=============//
-					
-			
+				 
+			 
 			    
 			} 
 			
@@ -1003,7 +1002,7 @@ true), 'fail_message');
 				exit(); 
 		
 		
-		 }
+		  }
      
 	 	  
 		 
@@ -1091,12 +1090,14 @@ true), 'fail_message');
   
 		 App::uses('CakeEmail', 'Network/Email');
 				$email = new CakeEmail();
-				$email->from("info@spr.com")
+				$email->from("saddamhossoin@yahoo.com")
 				->to("saddamhossoin@gmail.com")
-				->subject('[SPR] Invoice')
+				->subject('[iripair] Invoice')
 				->template('sales_invoice')
 				->emailFormat('html')
 				->viewVars(array('posSale'=>$posSale));
+			
+	 //	pr($posSale);die();
 			 if ($email->send("")) { 	
 				$this->Session->setFlash(__('Your Sale Invoice has been sent, please check your inbox', true),'success_message');
 			} else {

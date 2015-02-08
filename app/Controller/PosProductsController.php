@@ -343,6 +343,7 @@ class PosProductsController extends AppController {
 	}
      
 	 function index($yes = null , $is_report = null) {
+	 	// echo date("Y/m/d H:i:s");die();
  	 
     	if( ! empty( $this->request->data ) ){
             $this->Session->delete('PosProductSearch');
@@ -665,6 +666,7 @@ class PosProductsController extends AppController {
 	 
 	  
 	 function add( ) {
+
 		$this->PosProduct->recursive = 1;
  	    if ($this->request->is('ajax')) {
 		  if (!empty($this->request->data)) {

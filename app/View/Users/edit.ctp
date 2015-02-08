@@ -42,6 +42,12 @@
  			
  echo $this->Form->input('Group.group_id', array('type' => 'select','options' => $grouplist,'selected' =>$this->request->data['Group']['0']['id'],'div'=>false,'label'=>false, 'empty'=>'-- Please Select Group --', 'class'=>'required'));?>
  	 	</div>
+        <div id="WrapperUserJoindate" class="microcontroll" >
+			<?php echo $this->Form->label('User.counter_name', __('Select Counter'.': <span class="star"></span>', true) ); ?>
+ 			<?php 
+			$counter_list = array('Counter One'=>'Counter One', 'Counter Two'=>'Counter Two', 'Counter Three'=>'Counter Three', 'Counter Four'=>'Counter Four');
+			echo $this->Form->select('User.counter_name',  $counter_list, array('div'=>false,'label'=>false, 'empty'=>'-- Please Select Group --', 'class'=>' select2as'));?>
+ 	 	</div>
 		
         <div id="WrapperUserActive" class="microcontroll">
 			<?php echo $this->Form->label('active', __('Status'.': <span class="star">&nbsp;</span>', true) ); ?>

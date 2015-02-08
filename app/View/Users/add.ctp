@@ -38,6 +38,15 @@
  			<?php echo $this->Form->select('Group.group_id',  $grouplist, array('div'=>false,'label'=>false, 'empty'=>'-- Please Select Group --', 'class'=>'required select2as'));?>
  	 	</div>
 	 	  <div id="emailvalidinfo"  > <span></span> </div>
+          
+          
+   		<div id="WrapperUserJoindate" class="microcontroll" >
+			<?php echo $this->Form->label('User.counter_name', __('Select Counter'.': <span class="star"></span>', true) ); ?>
+ 			<?php 
+			$counter_list = array('Counter One'=>'Counter One', 'Counter Two'=>'Counter Two', 'Counter Three'=>'Counter Three', 'Counter Four'=>'Counter Four');
+			echo $this->Form->select('User.counter_name',  $counter_list, array('div'=>false,'label'=>false, 'empty'=>'-- Please Select Group --', 'class'=>' select2as'));?>
+ 	 	</div>
+
         <div id="WrapperUserActive" class="microcontroll">
 			<?php echo $this->Form->label('User.active', __('Status'.': <span class="star">&nbsp;</span>', true) ); ?>
             <?php echo $this->Form->checkbox('User.active',array( 'div'=>false,'label'=>false, 'size'=>35 ));?>

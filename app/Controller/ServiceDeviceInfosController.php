@@ -30,6 +30,11 @@ class ServiceDeviceInfosController extends AppController {
  					if(!empty($conditionarray)){$conditionarray .= " AND ";}
 					$conditionarray .= 'ServiceDevice.name like \'%'.$this->request->data['ServiceDevice']['name']."%'";		
  			 }
+			  if(!empty($this->request->data['ServiceDeviceInfo']['barcode_no']))
+				{
+ 					if(!empty($conditionarray)){$conditionarray .= " AND ";}
+					$conditionarray .= 'ServiceDeviceInfo.barcode_no = "'.$this->request->data['ServiceDeviceInfo']['barcode_no'].'"';		
+ 			 }
 			  if(!empty($this->request->data['User']['email_address']))
 				{
  					if(!empty($conditionarray)){$conditionarray .= " AND ";}
@@ -39,7 +44,7 @@ class ServiceDeviceInfosController extends AppController {
  			if(!empty($this->request->data['ServiceDevice']['pos_brand_id']))
 				{
  					if(!empty($conditionarray)){$conditionarray .= " AND ";}
-				$conditionarray .= 'ServiceDevice.pos_brand_id ='.$this->request->data['ServiceDevice']['pos_brand_id'];		
+				$conditionarray .= 'ServiceDevice.pos_brand_id = '.$this->request->data['ServiceDevice']['pos_brand_id'];		
   			 }
  			  if(!empty($this->request->data['ServiceDevice']['pos_pcategory_id']))
 				{
@@ -59,7 +64,7 @@ class ServiceDeviceInfosController extends AppController {
 			 
 			
 			 
-		   // pr( $conditionarray);die();
+		   //  pr( $conditionarray);die();
 		
 		 return $conditionarray;	
 	}
@@ -81,13 +86,14 @@ class ServiceDeviceInfosController extends AppController {
 			
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
+				'conditions' =>  array('ServiceDeviceInfo.is_urgent != 121'),
  				'limit' => '20',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  		);
 			$this->data='';
 	   }
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data) ),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data) ,'ServiceDeviceInfo.is_urgent != 121'),
 		            'limit' => $this->Filter->searchlimit($this->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->data,  'ServiceDeviceInfo'),
         		);
@@ -95,7 +101,7 @@ class ServiceDeviceInfosController extends AppController {
     
 		$this->ServiceDeviceInfo->recursive = 0;
 	
-	 	// pr($this->paginate());
+	  // pr($this->paginate );
 		$this->set('serviceDeviceInfos', $this->paginate());
 		
 		$this->loadModel('PosProduct');
@@ -193,14 +199,33 @@ class ServiceDeviceInfosController extends AppController {
 	
 	function checkStatus() {
  		if (!empty($this->request->data)){
-  		  $this->ServiceDeviceInfo->bindModel(array('belongsTo'=>array('PosCustomer'=>array(
+		
+				$this->ServiceDeviceInfo->unbindModel(array('hasOne'=>array('ServiceInvoice','Assesment')));
+				$this->ServiceDeviceInfo->ServiceDevice->unbindModelAll();
+				$this->ServiceDeviceInfo->User->unbindModelAll();
+				$this->ServiceDeviceInfo->ServiceDeviceAcessory->unbindModel(array('belongsTo'=>array('ServiceDeviceInfo')));
+	 			$this->ServiceDeviceInfo->ServiceDeviceDefect->unbindModel(array('belongsTo'=>array('ServiceDeviceInfo')));
+	  	
+				
+				 
+ 	 
+				
+				$this->ServiceDeviceInfo->recursive = 2;		
+  	 /* $this->ServiceDeviceInfo->bindModel(array('belongsTo'=>array('PosCustomer'=>array(
 										 'className' => 'PosCustomer',
 										'foreignKey' => 'pos_customer_id',
 										'dependent' => true,
 										'type' => 'right', 
 										 
- 						 ))), false);  
-			$this->set('serviceDeviceInfo', $this->ServiceDeviceInfo->find('first',array('conditions'=>array('ServiceDeviceInfo.serial_no'=>$this->request->data['ServiceDeviceInfo']['serial_no']))));
+ 						 ))), false); */
+						  
+						  
+			$this->set('serviceDeviceInfo', $this->ServiceDeviceInfo->find('first',array('conditions'=>array(
+			
+			'OR'=>array(
+			'ServiceDeviceInfo.serial_no'=>$this->request->data['ServiceDeviceInfo']['serial_no'],
+			'ServiceDeviceInfo.barcode_no'=>$this->request->data['ServiceDeviceInfo']['serial_no']
+			)))));
 		}
 		$this->layout  = 'wpage';
  	}
@@ -258,13 +283,10 @@ class ServiceDeviceInfosController extends AppController {
 		
 	}
 	
-	
-	
-	  function initial_assesment_list( $yes = null ){
-		
-    
+	//================== Express Service Ltd =================
+	 function express_service_list( $yes = null ){
 	 
-	$this->loadModel('PosCustomer');	
+	 	$this->loadModel('PosCustomer');	
  		$this->ServiceDeviceInfo->bindModel(  array('belongsTo' => array(
 			   'PosCustomer' => array(
 					'className' => 'PosCustomer',
@@ -287,6 +309,7 @@ class ServiceDeviceInfosController extends AppController {
 			$this->Session->delete( 'ServiceDeviceInfoSearch' );
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
+			'conditions' =>  array('ServiceDeviceInfo.is_urgent'=>121),
   				'limit' => '30',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  			);
@@ -295,7 +318,7 @@ class ServiceDeviceInfosController extends AppController {
 	   
 	//pr($this->filtercondition($this->request->data));die();
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data)),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.is_urgent'=>121),
 		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
         		);
@@ -304,6 +327,92 @@ class ServiceDeviceInfosController extends AppController {
 		
 				
 		$this->ServiceDeviceInfo->recursive =0;
+		 	//var_dump($this->paginate());
+		$this->set('assessment_lists', $this->paginate());
+		//pr($this->paginate());die();
+        $this->set('sortoption',array());
+		
+	
+	    $this->set('page_titles', 'Express List'); 
+	 	
+	 }
+	
+	  function initial_assesment_list( $yes = null ){
+	  
+	  
+ 		$this->loadModel('PosCustomer');	
+ 		$this->ServiceDeviceInfo->bindModel(  array('belongsTo' => array(
+			   'PosCustomer' => array(
+					'className' => 'PosCustomer',
+					'foreignKey' => 'pos_customer_id',
+				//	'conditions' => array($conditionarrayCustomer)
+					),
+					'UserModified' => array(
+					'className' => 'User',
+					'foreignKey' => 'modified_by',
+				//	'conditions' => array($conditionarrayCustomer)
+					),
+					
+				),
+			 'hasMany' => array(
+			   'AssesmentApproveNote' => array(
+					'className' => 'AssesmentApproveNote',
+					'foreignKey' => 'service_device_info_id',
+				 	'limit' => 1,
+					'Order'=>array('AssesmentApproveNote.modified'=>'desc')
+					),
+					
+					 
+ 				)
+          ) );
+		  
+		 
+		  
+    	if( ! empty($this->request->data ) ){
+            $this->Session->delete('ServiceDeviceInfoSearch');
+            $this->Session->write( 'ServiceDeviceInfoSearch', $this->request->data );
+        }
+         if( $this->Session->check( 'ServiceDeviceInfoSearch' ) ){
+              $this->request->data = $this->Session->read( 'ServiceDeviceInfoSearch' );
+           }
+	  if($yes == 'yes')
+	   {
+			$this->Session->delete( 'ServiceDeviceInfoSearch' );
+			$this->ServiceDeviceInfo->recursive = 0;
+			$this->paginate  = array(
+			'conditions' =>  array('ServiceDeviceInfo.is_urgent != 121'),
+  				'limit' => '30',
+				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
+ 			);
+			$this->request->data='';
+	   }
+	   
+	//pr($this->filtercondition($this->request->data));die();
+	    $this->paginate  = array(
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.is_urgent != 121'),
+		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
+					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
+        		);
+				
+			
+		
+		$this->ServiceDeviceInfo->User->unbindModelAll();	
+		$this->ServiceDeviceInfo->ServiceDevice->unbindModelAll();
+		$this->ServiceDeviceInfo->PosCustomer->unbindModelAll();
+		$this->ServiceDeviceInfo->ServiceInvoice->unbindModelAll();
+		$this->ServiceDeviceInfo->Assesment->unbindModelAll();
+		$this->ServiceDeviceInfo->ServiceDeviceAcessory->unbindModelAll();
+		$this->ServiceDeviceInfo->ServiceDeviceDefect->unbindModelAll();
+		$this->ServiceDeviceInfo->AssesmentApproveNote->unbindModelAll();
+		$this->ServiceDeviceInfo->AssesmentApproveNote->bindModel(array('belongsTo'=>array( 'User' => array(
+					'className' => 'User',
+					'foreignKey' => 'user_id',
+ 					),)));	
+		
+			
+		$this->ServiceDeviceInfo->recursive =2;
+		//pr($this->paginate());die();
+		
 		 	//var_dump($this->paginate());
 		$this->set('assessment_lists', $this->paginate());
 		//pr($this->paginate());die();
@@ -330,7 +439,7 @@ class ServiceDeviceInfosController extends AppController {
 			$this->Session->delete( 'ServiceDeviceApproveSearch' );
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
-			    'conditions' => array('ServiceDeviceInfo.status' =>4),
+			    'conditions' => array('ServiceDeviceInfo.status' =>4,'ServiceDeviceInfo.is_urgent != 121'),
  				'limit' => '20',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  			);
@@ -339,7 +448,7 @@ class ServiceDeviceInfosController extends AppController {
 	   
 	
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>4),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>4,'ServiceDeviceInfo.is_urgent != 121'),
 		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
         		);
@@ -386,7 +495,7 @@ class ServiceDeviceInfosController extends AppController {
 			$this->Session->delete( 'ServiceDeviceApproveSearch' );
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
-			    'conditions' => array('ServiceDeviceInfo.status' =>array(5,6)),
+			    'conditions' => array('ServiceDeviceInfo.status' =>array(5,6),'ServiceDeviceInfo.is_urgent != 121'),
  				'limit' => '20',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  			);
@@ -395,7 +504,7 @@ class ServiceDeviceInfosController extends AppController {
 	   
 	
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>array(5,6)),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>array(5,6),'ServiceDeviceInfo.is_urgent != 121'),
 		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
         		);
@@ -442,7 +551,7 @@ class ServiceDeviceInfosController extends AppController {
 			$this->Session->delete( 'ServiceDeviceInfoSearch' );
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
-			    'conditions' => array('ServiceDeviceInfo.status' =>array(6,7)),
+			    'conditions' => array('ServiceDeviceInfo.status' =>array(6,7),'ServiceDeviceInfo.is_urgent != 121'),
  				'limit' => '20',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  			);
@@ -451,7 +560,7 @@ class ServiceDeviceInfosController extends AppController {
 	   
 	
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>array(6,7)),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>array(6,7),'ServiceDeviceInfo.is_urgent != 121'),
 		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
         		);
@@ -496,7 +605,7 @@ class ServiceDeviceInfosController extends AppController {
 			$this->Session->delete( 'ServiceDeviceInfoSearch' );
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
-			    'conditions' => array('ServiceDeviceInfo.status' =>array(8,9)),
+			    'conditions' => array('ServiceDeviceInfo.status' =>array(8,9),'ServiceDeviceInfo.is_urgent != 121'),
  				'limit' => '20',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  			);
@@ -505,7 +614,7 @@ class ServiceDeviceInfosController extends AppController {
 	   
 	
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>array(8,9)),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' =>array(8,9),'ServiceDeviceInfo.is_urgent != 121'),
 		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
         		);
@@ -549,7 +658,7 @@ class ServiceDeviceInfosController extends AppController {
 			$this->Session->delete( 'ServiceDeviceInfoSearch' );
 			$this->ServiceDeviceInfo->recursive = 0;
 			$this->paginate  = array(
-			    'conditions' => array('ServiceDeviceInfo.status' => 9),
+			    'conditions' => array('ServiceDeviceInfo.status' => 9,'ServiceDeviceInfo.is_urgent != 121'),
  				'limit' => '20',
 				'order' =>array('ServiceDeviceInfo.modified'=>'desc'),
  			);
@@ -557,7 +666,7 @@ class ServiceDeviceInfosController extends AppController {
 	   }
  	
 	    $this->paginate  = array(
-    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' => 9),
+    	        	'conditions' =>  array($this->filtercondition($this->request->data),'ServiceDeviceInfo.status' => 9,'ServiceDeviceInfo.is_urgent != 121'),
 		            'limit' => $this->Filter->searchlimit($this->request->data , 'ServiceDeviceInfo'),
 					'order' =>$this->Filter->sortoption($this->request->data,  'ServiceDeviceInfo'),
         		);
@@ -885,6 +994,25 @@ class ServiceDeviceInfosController extends AppController {
 				exit();  
 		//============================Invoice image=======================================//
 	}
+ 	function get_recive( $id = null) {
+     //if ($this->RequestHandler->isAjax()) {	
+	 
+  				$this->request->data['ServiceDeviceInfo']['id'] = $id;
+				$this->request->data['ServiceDeviceInfo']['is_urgent'] = 1;
+				
+				 //pr($this->request->data);die();
+ 				if ($this->ServiceDeviceInfo->save($this->request->data['ServiceDeviceInfo'])) {
+ 					 echo $id;
+  				} else {
+					 echo "0";
+				}
+ 			  	Configure::write('debug', 0); 
+				$this->autoRender = false;
+				exit(); 
+		 
+		 
+    // }
+ 	}
 	//============== Status Change ====================
 	function changeStatus( $id = null) {
      if ($this->RequestHandler->isAjax()) {	
@@ -911,7 +1039,7 @@ class ServiceDeviceInfosController extends AppController {
 		if (!empty($this->request->data)) {
 		
 		
- 		// pr($this->request->data);die();
+ 		// pr($this->request->data);die(); <strong>serviceBarcode/SPR-00020.png</strong>
 	//================== New user and current user save ===============
 		$this->loadModel('User');
 		$this->loadModel('PosCustomer');
@@ -984,14 +1112,13 @@ class ServiceDeviceInfosController extends AppController {
                			$this->set('ms', $ms);
        					App::uses('CakeEmail', 'Network/Email');
 						$email = new CakeEmail();
-						$email->from("info@spr.com")
+						$email->from("romacinecitta@iriparo.com")
 						->to($userdata['User']['email_address'])
-						->subject('[SPR] Please Reset your password')
+						->subject('[Iripair] Please Reset your password')
 						->template('default')
 						->emailFormat('html')
 						->viewVars(array('Your Reset Password link  ' =>$ms))
-						->send("Hey, we heard you lost your SPR password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>
-				The Bravelets Team");
+						->send("Hey, we heard you lost your iripair password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br> iripair Team");
 										   if ($email->send()) {
          				$this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
                } else {
@@ -1022,6 +1149,9 @@ true), 'fail_message');
 		
  				$this->request->data['ServiceDeviceInfo']['user_id'] =  $userSave['User']['id'];
 				$this->request->data['ServiceDeviceInfo']['status'] =  1;
+				if($this->request->data['ServiceDeviceInfo']['is_urgent'] == 1){
+					$this->request->data['ServiceDeviceInfo']['is_urgent'] = 121;
+				}
 				$this->request->data['ServiceDeviceInfo']['recive_date'] = date("Y-m-d H:i:s" ,strtotime($this->request->data['ServiceDeviceInfo']['recive_date']));
 				$this->request->data['ServiceDeviceInfo']['estimated_date'] = date("Y-m-d H:i:s" ,strtotime($this->request->data['ServiceDeviceInfo']['estimated_date']));
 				
@@ -1055,7 +1185,7 @@ true), 'fail_message');
 					$serviceDeviceSaveId = $this->ServiceDeviceInfo->getLastInsertId();
 					//==================== Generate Barcode ===============
 					$this->add_barcode($this->request->data['ServiceDeviceInfo']['pos_customer_id'] ,$serviceDeviceSaveId , $this->request->data['ServiceDevice']['name']);
-					
+
  					if(!empty($this->request->data['ServiceDeviceAcessory'])){
 	
 						$this->loadModel('ServiceDeviceAcessory');
@@ -1119,7 +1249,7 @@ true), 'fail_message');
 			$barcode->hideCodeType();
 			$barcode->setSize(40,120);
  
- 			$data_to_encode = "SPR-".sprintf('%05d', $invoice_id);
+ 			$data_to_encode = "iripair-".sprintf('%05d', $invoice_id);
 			$device_name = explode("-",$device_name);
 			$barcode->setProductName($device_name[0]); 
 
@@ -1128,7 +1258,7 @@ true), 'fail_message');
 			// Generate filename    
 			$maxNumberIt = sprintf('%05d', $invoice_id); 
 			   
-			$file = 'img/serviceBarcode/SPR-'.$maxNumberIt.'.png';
+			$file = 'img/serviceBarcode/iripair-'.$maxNumberIt.'.png';
 			//echo $file;
 			$br_data['ServiceDeviceInfo']['barcode_file'] = $file;
 		
@@ -1313,11 +1443,7 @@ true), 'fail_message');
 		$this->set('client_comms', $this->paginate());
 		//pr($this->paginate());die();
         $this->set('sortoption',array());
-      
-	
-		
-	
-	    $this->set('page_titles', 'Waiting For Parts'); 
+ 	    $this->set('page_titles', 'Waiting For Parts'); 
 	
 	
 	
@@ -1331,9 +1457,22 @@ true), 'fail_message');
 			$this->Session->setFlash(__('Invalid id for service device info', true));
 			$this->redirect(array('action'=>'index'));
 		}
+		$datas = $this->ServiceDeviceInfo->read(null, $id);
 		if ($this->ServiceDeviceInfo->delete($id)) {
-			$this->Session->setFlash(__('Service device info deleted', true));
-			$this->redirect(array('action'=>'index'));
+		
+		//======================= Image Unlink =================
+ 			
+ 			unlink($datas['ServiceDeviceInfo']['barcode_file']);
+			unlink($datas['ServiceDeviceInfo']['screenimage']);
+			
+			
+		//================ Remove Relation Table ===============
+ 		
+		$this->loadModel('ServiceDeviceDefect');
+		$this->ServiceDeviceDefect->deleteAll(array('ServiceDeviceDefect.service_device_info_id'=>$id),false);	
+		$this->loadModel('ServiceDeviceAcessory');
+		$this->ServiceDeviceDefect->deleteAll(array('ServiceDeviceAcessory.service_device_info_id'=>$id),false);	
+ 			 
 		}
 		$this->Session->setFlash(__('Service device info was not deleted', true));
 		$this->redirect(array('action' => 'index'));

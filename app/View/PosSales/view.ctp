@@ -41,27 +41,31 @@
 
                 <div class="full_data_div">
                	 <div class="table-bordered">
-               			 <?php 
+               			<table>
+                         <?php 
                				 $slno = 1;
                				 foreach($posSale['PosSaleDetail'] as $saledetail){?>
-               				 <div class="top_sales_detail">
-               						<div style="width:30px;"><?php echo $slno;?></div>
-                                    <div style="width:470px;"><?php echo $saledetail['PosProduct']['name'];
-                                    if(!empty($saledetail['PosBarcode'])){
+               				 <tr  class="top_sales_detail">
+                             
+               						<td style="width:30px;"><?php echo $slno;?></td>
+                                    <td style="width:470px;"><?php echo $saledetail['PosProduct']['name'];
+                                  // pr($saledetail);
+								    if(!empty($saledetail['PosBarcode'])){
                                     echo "<div class='barcodesDiv'>Barcode: ";
                                     foreach($saledetail['PosBarcode'] as $barcode)
                                     {   
                                     echo "<span class='barcodes'>".$barcode['barcode']."</span> , ";
                                     }
-                                    }?></div> 
-                                    <div class="txt_center" style="width:60px;"><?php echo $saledetail['quantity'];?></div> 
-                                     <div class="txt_center" style="width:60px;"><?php echo $saledetail['price'];?></div> 
-                                    <div class="txt_center" style="width:60px;"><?php echo $saledetail['totalprice'];;?></div> 
+                                    }?>
+                                    </div></td> 
+                                    <td class="txt_center" style="width:60px;"><?php echo $saledetail['quantity'];?></td> 
+                                     <td class="txt_center" style="width:60px;"><?php echo $saledetail['price'];?></td> 
+                                    <td class="txt_center" style="width:60px;"><?php echo $saledetail['totalprice'];;?></td> 
                                 
               					 
-                                  </div> <?php $slno ++;}?>
+                                  </tr> <?php $slno ++;}?>
                                   <div style="clear:both;"></div>
-              		 </div>
+              		 </table>
                      
                 </div>
                 
@@ -152,6 +156,9 @@ div.customer_info_p{
 div.customer_info_p div{
 	margin-bottom:10px;
 	line-height:14px;
+}
+div.barcodesDiv{
+	border:1px solid;
 }
 </style>
 		</div>

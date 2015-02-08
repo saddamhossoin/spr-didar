@@ -73,15 +73,16 @@ class PagesController extends AppController {
 	}
 	public function home() {
 		
-			$this->layout= 'wpage';
+			
 			$this->loadModel('PosBrand');
 			$this->loadModel('PosPcategory');
- 			$this->PosBrand->recursive = 1;
+ 			$this->PosBrand->recursive = -1;
 			$posBrands = $this->PosBrand->find('all',array('fields'=>array('id','name','image','slug'),'order'=>'name asc'));
 			$posPcategories = $this->PosPcategory->find('list',array('order'=>'name asc'));
-			
-			
-			$this->set(compact('posBrands', 'posPcategories'));
+ 			
+			$this->set('posBrands',$posBrands);
+			$this->set('posPcategories',$posPcategories);
+			$this->layout= 'wpage';
 
 	}
  

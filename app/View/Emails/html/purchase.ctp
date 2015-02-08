@@ -83,7 +83,7 @@
 
 
 <p><strong>Thanks again for your support! </strong></p>
-<p><em> The PreCall </em><br />
+<p><em> The iripair </em><br />
   <br />
 </p>
                                                           </div>
@@ -123,7 +123,7 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_footer">
-																<em>Copyright &copy; PreCall LLC, All rights reserved.</em>
+																<em>Copyright &copy; iripair, All rights reserved.</em>
 																<br />
                                                             </div>
                                                         </td>

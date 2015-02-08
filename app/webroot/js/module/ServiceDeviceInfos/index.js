@@ -3,8 +3,8 @@ jQuery(function($){
 	 var dialogOptstempleteGeneralList = {
 		title:'Receive Invoice ',
 		autoOpen: false,
-		height: 600,
-		width: 750,
+		height: 610,
+		width: 835,
 		modal: true,
 		draggable:true,
  	    //close: CloseFunction,

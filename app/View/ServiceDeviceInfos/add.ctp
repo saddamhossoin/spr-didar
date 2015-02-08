@@ -164,7 +164,7 @@
 		 
 		</div>
          <div id="WrapperDeviceCheckList" class="microcontroll">
-		<?php	echo $this->Form->label('ServiceDeviceInfo.is_urgent', __('Is Urgent &nbsp;&nbsp;'.' <span class=star></span>', true) );?>
+		<?php	echo $this->Form->label('ServiceDeviceInfo.is_urgent', __('Is Express &nbsp;&nbsp;'.' <span class=star></span>', true) );?>
 		<?php	echo $this->Form->checkbox('ServiceDeviceInfo.is_urgent',array('div'=>false,'label'=>false,'class'=>''));?>
 		</div>
          <div class="clr"></div> 

@@ -1,0 +1,41 @@
+@charset "utf-8";
+/* CSS Document */
+#ServiceDeviceInfoCheckStatusForm{
+	width:490px;
+	margin:0px auto;
+	text-align:center;
+}
+#WrapperSerialNo{
+ 	padding:25px;
+	color:#000000;
+	font-size:16px;
+}
+#ServiceDeviceInfoSerialNo{
+	padding:5px;
+	font-size:16px;
+}
+.button_area{
+	margin:0px auto;
+}
+.messageDialog{
+	font-size:30px;
+	margin-top:35px;
+	text-align:center;
+}
+#btn_track_device_add, #Cancel{
+	   background: none repeat scroll 0 0 #2ea3f2;
+    border-radius: 10px;
+    color: #ffffff;
+    cursor: pointer;
+    font-family: verdana;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px;
+}
+.error_message{
+	color:red;
+	font-size:14px;
+	text-align:center;
+	margin-top:50px;
+}
+

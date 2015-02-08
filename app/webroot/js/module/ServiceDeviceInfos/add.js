@@ -104,7 +104,7 @@ $("#ServiceDeviceInfoIsPhoneBlock11").on('click',function(e){
 		title:'Add Acessories ',
 		autoOpen: false,
 		height: 460,
-		width: 550,
+		width: 580,
 		modal: true,
 		draggable:true,
  	    ////close: CloseFunction,
@@ -452,8 +452,8 @@ $("#ServiceDeviceInfoIsPhoneBlock11").on('click',function(e){
   var invoiceReload = {
 		title:'Recieve Device',
 		autoOpen: false,
-		height: 540,
-		width: 450,
+		height: 640,
+		width: 850,
 		modal: true,
 		 beforeClose: function() {
              window.location = window.location.pathname;

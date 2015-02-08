@@ -97,7 +97,8 @@
  		foreach($posSale['PosSaleDetail'] as $saledetail){?>
         <tr>
           <td><?php echo $slno;?></td>
-          <td><?php echo $saledetail['PosProduct']['name'];
+          <td>
+		  <?php echo $saledetail['PosProduct']['name'];
 			if(!empty($saledetail['PosBarcode'])){
 				echo "<div class='barcodesDiv'>Barcode: ";
 				foreach($saledetail['PosBarcode'] as $barcode)
