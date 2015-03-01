@@ -247,30 +247,22 @@ $(document).ready(function(){
           <?php 
 		  
 		  $posBrands =  $this->requestAction(array('controller' => 'PosBrands', 'action' => 'getBrands', 'return'));
-		
-		  
-  		 foreach($posBrands as $posBrand){ ?>
-  		  <li>  <?php echo $this->Html->link($posBrand['PosBrand']['name'], array('controller' => 'PosProducts', 'action' =>'shop','Brand',$posBrand['PosBrand']['slug'])); ?></li>
-          
-          <?php }?>
+   		 foreach($posBrands as $posBrand){ ?>
+  		  <li>  <?php //echo $this->Html->link($posBrand['PosBrand']['name'], array('controller' => 'PosProducts', 'action' =>'shop','Brand',$posBrand['PosBrand']['slug'])); ?></li>
+           <?php }?>
           </ul>
          </div>
       </div>
      </div>
     <div id="rightPan">
-      
-         <?php echo $this->fetch('content');?>
-       
-      <div class="clear"></div>
+          <?php echo $this->fetch('content');?>
+    <div class="clear"></div>
     </div>
     <div class="clear"></div>
-  </div>
-  
-   
-  
-  <div id="footer">
+  	</div>
+   <div id="footer">
     <p><?php echo $this->Html->link("HOME",array('controller'=>'#','action'=>'#')); ?> |<?php echo $this->Html->link("ABOUT US",array('controller'=>'#','action'=>'#')); ?>| <?php echo $this->Html->link("PRODUCTS",array('controller'=>'#','action'=>'#')); ?> | <?php echo $this->Html->link("SERVICES",array('controller'=>'ServiceServices','action'=>'front_service_view')); ?>| <?php echo $this->Html->link("SUPPORT",array('controller'=>'#','action'=>'#')); ?> | <?php echo $this->Html->link("REVIEWS",array('controller'=>'#','action'=>'#')); ?>| <?php echo $this->Html->link("CONTACTS",array('controller'=>'#','action'=>'#')); ?><br/>
-      <span>Copyright &copy; SPR</span>. Designed by <a href="http://www.mayasoftbd.com" target="_blank">MayasoftBD.com</a></p>
+      <span>Copyright &copy; Iripair</span>. Designed by <a href="http://www.mayasoftbd.com" target="_blank">MayasoftBD.com</a></p>
   </div>
 </div>
 <?php echo $this->element('sql_dump'); ?>

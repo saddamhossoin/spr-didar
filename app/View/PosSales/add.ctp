@@ -223,7 +223,7 @@
 		<div class="clr"></div>
 		<div id="WrapperServiceInvoiceDiscount" class="microcontroll">
 		<?php	echo $this->Form->label('PosSaleAmount.discount', __('Discount'.':<span class=star></span>', true) );?>
-		<?php	echo $this->Form->input('PosSaleAmount.discount',array('div'=>false,'label'=>false,'class'=>'number two_digit'));?>
+		<?php	echo $this->Form->input('PosSaleAmount.discount',array('div'=>false,'label'=>false,'class'=>'number two_digit','value'=>0));?>
 		</div>
             
 		

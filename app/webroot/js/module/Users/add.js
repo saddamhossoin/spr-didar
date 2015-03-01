@@ -81,16 +81,14 @@ jQuery(function($){
 			$('.ajax-save-message').hide().fadeOut(); 
 		//===================== Ajax Submit =================
 		  $.post( siteurl + 'Users/add', $("#UserAddForm").serialize(), function(response) { 
-		 		 	//alert(response)
+		 		//alert(response)
 				$('.ajax_status').html(response);
 				$("#Cancel").click(); 
 				//window.location = siteurl + 'users/index'; 
-				
-  			});
-
-	}
-  	return false; 
-	}) ;
+  				});
+			}
+		  	return false; 
+		}) ;
 	
 });
 //==================== End Add Script =========================

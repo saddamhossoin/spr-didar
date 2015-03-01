@@ -357,8 +357,7 @@ class AssesmentsController extends AppController {
 		
 	
 	function testingview_assessment( $id = null , $technician=null){
-		
-		
+
 	  //============================ Read Device Info ====================
 	   $this->loadModel('ServiceDeviceInfo');
 	   $this->loadModel('ServiceDevice');
@@ -369,7 +368,7 @@ class AssesmentsController extends AppController {
 					'foreignKey' => 'pos_pcategory_id',
 					'type' => 'INNER'
 					),
-					'PosBrand' => array(
+				'PosBrand' => array(
 					'className' => 'PosBrand',
 					'foreignKey' => 'pos_brand_id',
 					'type' => 'INNER'
@@ -377,7 +376,7 @@ class AssesmentsController extends AppController {
 				)
           ) );
 		  
-				$this->loadModel('ServiceDeviceAcessory');
+		$this->loadModel('ServiceDeviceAcessory');
 		$this->ServiceDeviceAcessory->unbindModelAll();  
 		$this->loadModel('ServiceDeviceDefect');
 		$this->ServiceDeviceDefect->unbindModelAll();  
@@ -385,14 +384,32 @@ class AssesmentsController extends AppController {
 		$this->ServiceInvoice->unbindModelAll(); 
  
 	   $this->ServiceDeviceInfo->recursive =2;
-	   $this->set('serviceDeviceInfo',$this->ServiceDeviceInfo->find('first',array('conditions'=>array('ServiceDeviceInfo.id'=>$id))));
-		 
-		 $this->loadModel('ServiceDefect');
-		 $this->set('ServiceDeviceDefects',$this->ServiceDefect->find('list'));
-		  $this->loadModel('ServiceAcessory');
-     $this->set('ServiceDeviceAcessories',$this->ServiceAcessory->find('list'));
-	 
-	   $this->set('page_titles', 'New Assesment'); 
+	   $serviceDeviceInfo = $this->ServiceDeviceInfo->find('first',array('conditions'=>array('ServiceDeviceInfo.id'=>$id)));
+	   $this->set('serviceDeviceInfo',$serviceDeviceInfo);
+	   
+		   //============ If not Check List Entry Default ===========
+			if(empty($serviceDeviceInfo['ServiceDeviceInfo']['checklist'])){ 
+				$this->loadModel('DeviceCheckList');
+				$devicelist = $this->DeviceCheckList->find('list');
+
+				$listdevices = array();
+				foreach($devicelist as $key => $val){
+					$listdevices[$key]['default'] =1; 
+				}
+				
+ 				$this->request->data['ServiceDeviceInfo']['id'] = $serviceDeviceInfo['ServiceDeviceInfo']['id'];
+				$this->request->data['ServiceDeviceInfo']['checklist'] =  serialize($listdevices);
+				
+				$this->ServiceDeviceInfo->save($this->request->data['ServiceDeviceInfo']);	
+					
+			}
+			 
+			$this->loadModel('ServiceDefect');
+			$this->set('ServiceDeviceDefects',$this->ServiceDefect->find('list'));
+			$this->loadModel('ServiceAcessory');
+			$this->set('ServiceDeviceAcessories',$this->ServiceAcessory->find('list'));
+			
+			$this->set('page_titles', 'New Assesment'); 
 		
 		}
 		
@@ -451,13 +468,13 @@ class AssesmentsController extends AppController {
 			}
 			if(!empty($this->request->data)){
 			
-				if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
+			//	if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
 					$this->loadModel('AssesmentApproveNote');
 					$this->AssesmentApproveNote->create();
 					$this->request->data['AssesmentApproveNote']['user_id'] = $this->Auth->user('id');
 					$this->request->data['AssesmentApproveNote']['stage_des'] = 'Re-Assesment';
 					$this->AssesmentApproveNote->save($this->request->data);
-				 }
+				// }
  				 $this->loadModel('ServiceDeviceInfo');
 				 $this->ServiceDeviceInfo->updateAll(array('ServiceDeviceInfo.status' => 3),array('ServiceDeviceInfo.id'=>$this->request->data['AssesmentApproveNote']['service_device_info_id']));
 
@@ -474,6 +491,7 @@ class AssesmentsController extends AppController {
 			 }
 		}
 		function re_service( $id = null){
+		
 		   
 		   	if (!$id && empty($this->request->data)) {
 			
@@ -481,14 +499,20 @@ class AssesmentsController extends AppController {
 				$this->redirect(array('action' => 'index'));
 			}
 			if(!empty($this->request->data)){
+				
+				$this->loadModel('AssesmentApproveNote');
+				
+				$service_tech = $this->AssesmentApproveNote->find('first',
+				array('conditions'=>array('AssesmentApproveNote.service_device_info_id'=>$this->request->data['AssesmentApproveNote']['service_device_info_id'],'AssesmentApproveNote.stage_des'=>'Service Complete'),'order'=>'modified DESC','recursive'=>-1));
 			
-				if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
-					$this->loadModel('AssesmentApproveNote');
-					$this->AssesmentApproveNote->create();
-					$this->request->data['AssesmentApproveNote']['user_id'] = $this->Auth->user('id');
+			//pr($service_tech);die();
+				//if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
+				$this->AssesmentApproveNote->create();
+				$this->request->data['AssesmentApproveNote']['user_id'] = $service_tech['AssesmentApproveNote']['user_id'];
+					
 					$this->request->data['AssesmentApproveNote']['stage_des'] = 'Re-Service';
 					$this->AssesmentApproveNote->save($this->request->data);
-				 }
+				 //}
   				 $this->loadModel('ServiceDeviceInfo');
 				 $this->ServiceDeviceInfo->updateAll(array('ServiceDeviceInfo.status' => 5),array('ServiceDeviceInfo.id'=>$this->request->data['AssesmentApproveNote']['service_device_info_id']));
 
@@ -520,13 +544,13 @@ class AssesmentsController extends AppController {
 			}
 			if(!empty($this->request->data)){
 			
-				if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
+				//if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
 					$this->loadModel('AssesmentApproveNote');
 					$this->AssesmentApproveNote->create();
 					$this->request->data['AssesmentApproveNote']['user_id'] = $this->Auth->user('id');
 					$this->request->data['AssesmentApproveNote']['stage_des'] = 'Test Complete';
 					$this->AssesmentApproveNote->save($this->request->data);
-				 }
+				// }
   				 $this->loadModel('ServiceDeviceInfo');
 				 $this->ServiceDeviceInfo->updateAll(array('ServiceDeviceInfo.status' => 7),array('ServiceDeviceInfo.id'=>$this->request->data['AssesmentApproveNote']['service_device_info_id']));
 
@@ -569,13 +593,13 @@ class AssesmentsController extends AppController {
 			}
 			if(!empty($this->request->data)){
 			
-				if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
+				//if(!empty($this->request->data['AssesmentApproveNote']['notes'])){
 					$this->loadModel('AssesmentApproveNote');
 					$this->AssesmentApproveNote->create();
 					$this->request->data['AssesmentApproveNote']['user_id'] = $this->Auth->user('id');
 					$this->request->data['AssesmentApproveNote']['stage_des'] = 'Service Complete';
 					$this->AssesmentApproveNote->save($this->request->data);
-				 }
+				// }
  				
 					$this->loadModel('ServiceDeviceInfo');
 		   			$this->ServiceDeviceInfo->updateAll(array('ServiceDeviceInfo.status' => 6),array('ServiceDeviceInfo.id'=>$this->request->data['AssesmentApproveNote']['service_device_info_id']));

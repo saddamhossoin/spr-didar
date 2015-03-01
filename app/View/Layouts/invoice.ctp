@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Report For SPR</title>
+<title>Report For Iriparo</title>
 <?php echo $this->Html->css(array('module/PosSales/report'));?>
 <?php echo $this->Html->css(array('common/common','common/rounded','ui/ui.base','themes/black_rose/ui','common/reportgrid' ,'module/'.Inflector::singularize($this->params['controller']).'/'.Inflector::singularize($this->params['action'])   )); 
  	//echo $this->Html->css(array('common/report'));

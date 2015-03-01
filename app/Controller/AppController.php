@@ -7,12 +7,8 @@
  * @package       app.Controller
  user name : mayasoft
  
- http://mayasoftbd.com:2082/cpsess4983843583/3rdparty/phpMyAdmin/index.php#PMAURL:server=1&target=main.php&token=9c402b2497454273201b3ad9a7957c55
- mayasoft
- CENTOS 6.5
- https://p3plcpnl0344.prod.phx3.secureserver.net:2083/cpsess8741348065/3rdparty/phpMyAdmin/index.php#PMAURL-0:index.php?db=&table=&server=1&target=&lang=en&collation_connection=utf8_general_ci&token=134bd9f720f169d714a3b1f6f014fdd4
- solutionpoint
- mayasoftbd@1A
+ https://p3plcpnl0116.prod.phx3.secureserver.net:2083/cpsess2821083232/3rdparty/phpMyAdmin/index.php#PMAURL-6:index.php?db=&table=&server=1&target=&token=280a2ff5520b6ab7d642656147bdff5b
+  
 
 
  */
@@ -59,8 +55,6 @@ class AppController extends Controller {
 	public $helpers = array('Html','Form','Session','Time','Menu','Js','Captcha');
    
     public function beforeFilter() {
-	
-	//echo date('l jS \of F Y h:i:s A');
 	
 		 
 	 $this->Auth->allow(array('admindashboard','user_registration','display','home','forgetpwd','reset','checkusername','captcha','login_popup','captcha','slug_edit','shop','getTypes','getBrands','front_service_view','defect_name','itemupdate','cart','all_order','online_order','sales_order','suspend_order','complete_order','online_sales_invoice','balance_sheet_report','suspend_order','ajax_check_username','user_status','complete_order_online','order_suspend','sales_invoice','checkout','minilogin','device_accessories','address','solid_device','brand_list','review','checklist','client_service','client_sales_list','client_view','client_profile','client_profile_setting','client_communication','waiting_for_parts','invoice_view','send_invoice','barcode_print_product','purchase_barcode','barcode_print_purchase','add_from_product_edit','getProductInfo','checkStatus'));
@@ -229,7 +223,7 @@ class AppController extends Controller {
 		$_SESSION['tax'] = 22;
 		$this->set('tax',$_SESSION['tax']);
 		//================ Set User lists ===============
-      	if(empty($_SESSION['userlists']))
+      /*	if(empty($_SESSION['userlists']))
       	{
       		$userlists = $this->User->find('list',array('fields'=>array('id','firstname')));
         	$_SESSION['userlists'] = $userlists;
@@ -238,7 +232,7 @@ class AppController extends Controller {
       	else
       	{
        		$this->set('userlists',$_SESSION['userlists']); 
-      	}
+      	}*/
        
      //  pr($_SESSION['Menulist']);
    		$this->loadModel('Menu');

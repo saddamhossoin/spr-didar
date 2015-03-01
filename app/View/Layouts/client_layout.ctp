@@ -242,7 +242,7 @@
 		
 		<div id="footer">
 		<p><?php echo $this->Html->link("HOME",array('controller'=>'#','action'=>'#')); ?> |<?php echo $this->Html->link("ABOUT US",array('controller'=>'#','action'=>'#')); ?>| <?php echo $this->Html->link("PRODUCTS",array('controller'=>'#','action'=>'#')); ?> | <?php echo $this->Html->link("SERVICES",array('controller'=>'ServiceServices','action'=>'front_service_view')); ?>| <?php echo $this->Html->link("SUPPORT",array('controller'=>'#','action'=>'#')); ?> | <?php echo $this->Html->link("REVIEWS",array('controller'=>'#','action'=>'#')); ?>| <?php echo $this->Html->link("CONTACTS",array('controller'=>'#','action'=>'#')); ?><br/>
-		  <span>Copyright &copy; SPR</span>. Designed by <a href="http://www.mayasoftbd.com" target="_blank">MayasoftBD.com</a></p>
+		  <span>Copyright &copy; iripair 2015</span>. Designed by <a href="http://www.mayasoftbd.com" target="_blank">MayasoftBD.com</a></p>
 	  </div>
 
 

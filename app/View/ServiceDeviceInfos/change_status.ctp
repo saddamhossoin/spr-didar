@@ -8,7 +8,7 @@
  		 <?php
  		 	echo $this->Form->input('ServiceDeviceInfo.id',array('type'=>'hidden','div'=>false,'label'=>false, 'value'=>$serId)); 
 		 
-			$status_array = array(12=>'CUSTOMER COMMUNICATION' , 13=>'AWAITING CONFIRMATION QUOTE' , 14=>'WAITING FOR PARTS' , 1=>'Cheif Tech Dashboard', 15=>'Waiting for password/pin' , 16=> 'Sent Samsung/Nokia warranty' , 17=>'Received from Samsung/Nokia warranty',18=>'Returned at Samsung/Nokia warranty');
+			$status_array = array(12=>'CUSTOMER COMMUNICATION' , 13=>'AWAITING CONFIRMATION QUOTE' , 14=>'WAITING FOR PARTS' , 1=>'Cheif Tech Dashboard', 15=>'Waiting for password/pin' , 16=> 'Sent SPR' , 17=>'Received from SPR',18=>'Returned at SPR');
  			echo $this->Form->select('ServiceDeviceInfo.status',  $status_array  ,array('div'=>false,'label'=>false, 'empty'=>'-- Please Select Status-', 'class'=>'required select2as'));?>
   		</div>
  	 

@@ -74,7 +74,7 @@ ul.topics li.t03 {background:url(../../../img/wpage/spr/topic_3.gif) 0 0 no-repe
 
 /* CONTENT */
 
-#leftPan{width:195px; margin:0 19px 0 0; float:left; display:inline}
+#leftPan{width:195px; margin:0 19px 0 0; float:left; display:none;}
 #rightPan{width:475px; float:left; position:relative}
 
 #news{height:auto;width:193px; padding:0px 0px 15px 0px; border:#e7edf2 1px solid; margin-bottom:10px}

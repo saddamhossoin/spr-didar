@@ -21,12 +21,12 @@ jQuery(function($){
  		//========================== Validation Check ========
  			$('.overlaydiv').fadeIn();
 			$('.ajax-save-message').hide().fadeOut(); 
- 
- 			$.ajax({
+  			$.ajax({
 			type: "POST",
 			url:siteurl+"Assesments/re_service/",
 			data:  $("#AssesmentApproveNoteReServiceForm").serialize(),
 			success: function(response){
+			//alert(response);
 				if(response == 1){
 					location.reload();
 				}else{

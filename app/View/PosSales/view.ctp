@@ -95,8 +95,7 @@
 }
 .top_sales_detail div{
 	height:17px;
-	float:left;
-	font-size:10px;
+ 	font-size:10px;
 }
 .full_data_div{
 	float:left;

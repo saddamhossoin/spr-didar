@@ -5,6 +5,7 @@ $action_css = 'module/' . Inflector::camelize($this->request->params['controller
     if( file_exists(CSS . $action_css . '.css') ) {
         echo $this->Html->css( $action_css );
     }?>
+    <br /><br /><br />
 <h2 class="messageDialog">Check your Device Status!</h2>
 <?php echo $this->Form->create('ServiceDeviceInfo',array('action'=>'checkStatus'));?>
 <div id="WrapperSerialNo" class="microcontroll">
@@ -107,4 +108,11 @@ $action_css = 'module/' . Inflector::camelize($this->request->params['controller
 	{
 		echo "<h1 class='error_message'>Invalid Serial or Barcode!!!</h1>";
 	}
-}
+}?>
+<style>
+ #leftPan{display:none !important; height:300px;}
+ #rightPan{
+ 	width:100%;
+ }
+</style>
+<br /><br /><br />

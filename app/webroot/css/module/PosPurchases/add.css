@@ -283,3 +283,10 @@ label[for=PosPurchaseAmountIsTaxLavel]{
 #s2id_PosPurchaseAmountIsTax{
 	width:85px !important;
 	}
+#WrapperAccountsCheckNumber{
+	width:385px;
+}
+ 
+#WrapperAccountsCheckNumber input{
+	margin-bottom:5px;
+}

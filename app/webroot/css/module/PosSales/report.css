@@ -68,14 +68,12 @@ h2.company_heading_right{
 	
 }
 .customer_info_div {
-	_float: left;
-	height: 224px;
+ 	height: 224px;
 	width: 728px;
 }
 .customer_info_div div {
-	_float: left;
-	height: auto;
-	width:394px;
+ 	height: auto;
+	width:47%;
 	margin-left:35px;
 }
 .customer_left_div p {
@@ -141,7 +139,7 @@ td.captionLeft {
 }
 td.captionBorder {
 	border:1px solid black;
-	background-color: #DDDDDD;
+	_background-color: #DDDDDD;
 }
 
 .product_table_div {

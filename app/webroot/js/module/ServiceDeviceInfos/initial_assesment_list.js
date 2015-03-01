@@ -28,7 +28,37 @@ var dialogOptstempleteGeneralLists1 = {
 		});
 	});
 			
+//===================== Assesment Add ======================
+
 			
+				
+var dialogOptstempleteGeneralListsAssesmentAdd = {
+		title:'Assesment Add',
+		autoOpen: false,
+		height: 600,
+		width: 1120,
+		modal: true,
+		//draggable:true,
+ 	    close: function(){
+		 location.href = siteurl+'ServiceDeviceInfos/initial_assesment_list';
+		},
+	  dialogClass: 'objectdetailsdialogAssAdd',
+	}; 
+	
+	$("#invoice2").dialog(dialogOptstempleteGeneralListsAssesmentAdd);
+	
+	$(".AssesmentAdd").on('click',function(e){
+ 				e.preventDefault(); 
+				var ulrs =$(this).attr('href');
+				$("#invoice2").load(ulrs, [], function(){
+											   
+				$("#invoice2").dialog("open");
+				$('.ajax_status').fadeOut();
+				$('.overlaydiv').fadeOut();
+			});
+		});
+	
+	//======================== End Assesment Add ========================
 
 				
 				

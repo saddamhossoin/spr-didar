@@ -197,9 +197,9 @@ class BarcodesController extends AppController {
 			//  var_dump($exiting_barcode);die();
 			if(empty($exiting_barcode['PosBarcode']['barcode'])){
 				
-				$data_to_encode = "SPR$catename".sprintf('%04d', $maxNumber['0']['maxid']+1);
+				$data_to_encode = "Iripair$catename".sprintf('%04d', $maxNumber['0']['maxid']+1);
 				$maxNumberIt = sprintf('%04d', $maxNumber['0']['maxid']+1); 
-				$file = 'img/barcode/SPR'.$catename.''.$maxNumberIt.'.png';
+				$file = 'img/barcode/Iripair'.$catename.''.$maxNumberIt.'.png';
 				$this->Barcode->create();
 			}else{
 			

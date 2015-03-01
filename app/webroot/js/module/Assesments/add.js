@@ -134,6 +134,7 @@ var dialogOptAssesment = {
 			
  	if( $('#ServiceInvoiceAddForm').valid()) {
 		 	 var data=$('#ServiceInvoiceAddForm').serialize();
+			 $(".save_approve_btn_receive").hide();
 			 $('.ajax_status').fadeIn();
 			 $('.overlaydiv').fadeIn();
 			 
@@ -193,12 +194,17 @@ var dialogOptAssesment = {
 	
 	$("#invoice1").dialog(dialogOptstempleteGeneralLists);
 	
+		//=======================btn hide code start==============================// 
+		 
+	//===========================btn hide code end==========================// 
+	
 	$("#btn_full_Assesment_add_approve").on('click',function(e){
 			e.preventDefault();
 		
 			
  	if( $('#ServiceInvoiceAddForm').valid()) {
 		 	 var data=$('#ServiceInvoiceAddForm').serialize();
+			 $(".save_approve_btn_receive").hide();
 			 $('.ajax_status').fadeIn();
 			 $('.overlaydiv').fadeIn();
 			 
@@ -360,37 +366,7 @@ $(".reciveDeviceAssementInventory").on('click', '.AssesmentInventoryRemove', blu
 	
 	
 	
-	
-	//===================== View Check list Popup ===============
-	var dialogOptstempleteGeneralListss = {
-		title:'View Check List',
-		autoOpen: false,
-		height: 400,
-		width: 600,
-		modal: true,
-		//draggable:true,
-		//close: CloseFunction,
-		dialogClass: 'objectdetailsdialog',
-	};
-	$("#invoice7").dialog(dialogOptstempleteGeneralListss);
-	
-	$("#view_checklist").on('click',function(e){
-		e.preventDefault();
-  		
-		 var service_info_id = $("#ServiceDeviceInfo_id").html();
-		 	 
-		var ulrs =siteurl+"ServiceDeviceInfos/viewcheck_list/"+service_info_id;
-			$("#invoice7").load(ulrs, [], function(){
-			$("#invoice7").dialog("open");
-			//add_inventory
-			
-			
- 		});
-  
-	});
-	//======================View Check list Popup end ===============================
-	
-	
+ 
 				
 	//======================= Start Update Assesment ==================
 	 $("#btn_Assesment_edit").on('click',function(e){
@@ -435,14 +411,7 @@ $(".reciveDeviceAssementInventory").on('click', '.AssesmentInventoryRemove', blu
 
 	 
 	 
-	//=======================btn hide code start==============================// 
-		  $(".save_btn_receive").on('click',function(e){
-			$(".save_approve_btn_receive").hide();
-		  });
-		  $(".save_approve_btn").on('click',function(e){
-			$(".save_approve_btn_receive").hide();
-		  });
-	//===========================btn hide code end==========================// 
+
 		
 	 
 		 		

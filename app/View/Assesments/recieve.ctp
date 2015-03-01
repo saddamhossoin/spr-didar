@@ -1,13 +1,8 @@
- 
 <div id="is_email"><?php echo $this->Html->link(__('Send Email', true), array('action' => 'is_email', $serviceDeviceInfo['Assesment']['id']),array('class'=>' action_link_email','id'=> $serviceDeviceInfo['Assesment']['id'])); ?></div>
 <div id="is_sms"><?php echo $this->Html->link(__('Send SMS', true), array('action' => 'is_email', $serviceDeviceInfo['Assesment']['id']),array('class'=>' action_link_sms')); ?></div>
  <br />
-  
- 
 <div id="invoice" class="Print_content_areas"> 
-
-
- <?php 
+<?php 
  $data=$serviceDeviceInfo;
   if(!empty($serviceDeviceInfo)){ ?>
   <table class="" cellpadding="0"  border="0" width="100%">
@@ -63,12 +58,10 @@
 		 <table cellspacing="0" cellpadding="0" border="0" style="" class=" view_table">
    <thead>
         <tr>
-        <th width="27%">Product</th>
-        <th width="33%">Brand--Category</th>
-        <th width="15%">Quantity</th>
-        <th width="10%">Price</th>
-        <th width="15%">Item Total</th>
-       
+        <th width="45%">Product</th>
+        <th width="45%">Brand--Category</th>
+        <th width="10%">Quantity</th>
+        
         </tr>
    </thead>
     <tbody>
@@ -91,9 +84,7 @@
             <td> <?php echo $productInfos['PosBrand']['name']."--".$productInfos['PosPcategory']['name']; ?></td>
             
             <td style="text-align:center"> <?php echo $assesmentInventory['quantity'];  ?></td>
-            <td style="text-align:center"> <?php echo $assesmentInventory['price'];  ?></td>
-            <td style="text-align:right" class="inventorytotalpriceli"> <?php echo $assesmentInventory['quantity'] * $assesmentInventory['price'];  ?></td>
- 			 
+  			 
 	</tr>
 <?php endforeach; ?>
 </tbody>
@@ -110,20 +101,14 @@
 	<table cellspacing="0" cellpadding="0" border="0" style="" class=" view_table">
    <thead>
         <tr>
-        <th width="27%">Service</th>
-        <th width="33%"> Device </th>
-		<th width="15%">Price</th>
-		<th width="10%">Quantity</th>
-		<th width="15%">Item Total</th>
-        
-        </tr>
+            <th width="90%">Service Name</th>
+             <th width="10%">Quantity</th>
+         </tr>
    </thead>
     <tbody>
 	<?php
-  
   if(!empty($assesmentServices)){
-  
- 		$i = 0;
+  		$i = 0;
 		foreach ($assesmentServices as $assesmentService):
  			$class = null;
 			if ($i++ % 2 == 0) {
@@ -136,11 +121,8 @@
   	?>
 		<tr <?php echo $class;?> id="AssesmentServiceTr_<?php echo $assesmentService['id'];?>">
       <td> <?php echo $serviceInfo['ServiceService']['name']; ?></td>
-      <td> <?php echo $serviceInfo['ServiceDevice']['name']; ?></td>
-      <td style="text-align:center"> <?php echo $assesmentService['price']; ?></td>
-      <td style="text-align:center"> <?php echo $assesmentService['quantity'];  ?></td>
-      <td style="text-align:right" class="servicetotalpriceli"> <?php echo $assesmentService['quantity'] * $assesmentService['price'];  ?></td>
- 			 
+       <td style="text-align:center"> <?php echo $assesmentService['quantity'];  ?></td>
+  			 
 	</tr>
 <?php endforeach; ?>
 </tbody>

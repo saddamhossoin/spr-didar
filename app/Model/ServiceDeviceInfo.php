@@ -16,7 +16,7 @@ class ServiceDeviceInfo extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
+ 	public $belongsTo = array(
 		'User' => array(
 			'className' => 'User',
 			'foreignKey' => 'user_id',

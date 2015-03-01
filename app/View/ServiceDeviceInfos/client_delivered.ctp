@@ -1,16 +1,29 @@
 <?php echo $this->Html->script(array('alert/alert')); ?>
 <?php echo $this->Html->css(array('alert/css/alert','alert/themes/default/theme')); ?>
 <?php echo $this->Html->css(array('common/grid'));
+
  echo $this->Html->script(array('common/form','common/jquery.validate'));  
+  echo $this->Html->script(array('module/Assesments/add'));
+
  //pr($serviceDeviceInfo);
   $urgent_class = '';
 		if($serviceDeviceInfo['ServiceDeviceInfo']['is_urgent'] == 1)
 		{$urgent_class = 'urgent_class';}else{$urgent_class = '';}
 ?>
+  <span id="view_checklist12">View Checklist</span>
+		 
+   			
+  <?php  
+	 
+	if(!empty($serviceDeviceInfo['ServiceDeviceInfo']['screenimage'])){  ?>
+    <span id="view_Service_Image" class="btn_view_image_link" title="<?php echo $serviceDeviceInfo['ServiceDeviceInfo']['id'];?>">Image</span>
+     <?php } ?>
+     <span id="view_Service_Note" class="btn_view_image_link" title="<?php echo $serviceDeviceInfo['ServiceDeviceInfo']['id'];?>">Note</span>
  <div id="columns">   
       <div class="reciveDeviceContact reciveDevice">
     <div class="blocktitleinfo"> Service Information
 	<?php echo "<span class='serial_no'>".'Recive ID : '.$serviceDeviceInfo['ServiceDeviceInfo']['id']."</span>";?>
+     <span style=" display:none" id="ServiceDeviceInfo_id"><?php echo $serviceDeviceInfo['ServiceDeviceInfo']['id'];?></span>
 	</div>
     <div class="rdcontent_left">
       <table  class="assesmentSDIGrid">
@@ -196,7 +209,7 @@
 			<?php echo $serviceInfo['ServiceService']['name'] ?>
       
              <?php 
-            echo $this->Form->input("ServiceDevicesService.".$serviceInfo['ServiceDevicesService']['id'], array('type' => 'text', 'value' =>$serviceInfo['ServiceDevicesService']['id'], 'hidden' => true,'div'=>false,'label' => false)); ?>
+            echo $this->Form->input("ServiceDevicesService.".$serviceInfo['ServiceService']['id'], array('type' => 'text', 'value' =>$serviceInfo['ServiceService']['id'], 'hidden' => true,'div'=>false,'label' => false)); ?>
             
             </td>
             <td><?php echo $assesmentService['price'] ?></td>
@@ -212,9 +225,7 @@
     <div class="clr"></div>
   </div>
     </div>
-    
-    
-    <div id="invoicearea">
+     <div id="invoicearea">
     <div class="reciveDeviceAssementInventory reciveDevice">
     <div class="blocktitleinfo"> Accounts </div>
     <div class="bDiv" style="height: auto;">
@@ -223,12 +234,9 @@
    <?php echo $this->Form->create('ServiceInvoice');?>
     
 	<?php if(!empty($serviceDeviceInfo['ServiceInvoice']['id'])){
-			   echo $this->Form->input('ServiceInvoice.id',array('value'=>$serviceDeviceInfo['ServiceInvoice']['id'],'type'=>'hidden','div'=>false,'label'=>false,'class'=>''));}
-			   ?>
-    			<?php	echo $this->Form->input('ServiceInvoice.service_device_info_id',array('value'=>$serviceDeviceInfo['ServiceDeviceInfo']['id'],'type'=>'hidden','div'=>false,'label'=>false,'class'=>''));?>
-   
-     
-      <div id="WrapperServiceInvoiceInventoryTotal" class="microcontroll">
+			   echo $this->Form->input('ServiceInvoice.id',array('value'=>$serviceDeviceInfo['ServiceInvoice']['id'],'type'=>'hidden','div'=>false,'label'=>false,'class'=>''));}?>
+    	<?php	echo $this->Form->input('ServiceInvoice.service_device_info_id',array('value'=>$serviceDeviceInfo['ServiceDeviceInfo']['id'],'type'=>'hidden','div'=>false,'label'=>false,'class'=>''));?>
+       <div id="WrapperServiceInvoiceInventoryTotal" class="microcontroll">
         <?php	echo $this->Form->label('ServiceInvoice.inventory_total', __('Inventory Total'.':<span class=star>*</span>', true) );?>
         <?php	echo $this->Form->input('ServiceInvoice.inventory_total',array('type'=>'text','readonly'=>'readonly','div'=>false,'label'=>false,'class'=>'', 'value'=> $serviceDeviceInfo['ServiceInvoice']['inventory_total']));?>
       </div>
@@ -247,8 +255,7 @@
 		$is_tax =array('1'=>'Yes','0'=>'No');
 		echo $this->Form->select('ServiceInvoice.is_tax', $is_tax , array('escape' => false,'empty'=>'-Tax-', 'class'=>'required select2as'))?>
       </div>
-     
-    <div id="WrapperServiceInvoiceTotala" class="microcontroll">
+     <div id="WrapperServiceInvoiceTotala" class="microcontroll">
         <?php	echo $this->Form->label('ServiceInvoice.total', __('Total'.':<span class=star>*</span>', true) );?>
         <?php	echo $this->Form->input('ServiceInvoice.total',array('type'=>'text','readonly'=>'readonly','div'=>false,'label'=>false,'class'=>'required', 'value'=> $serviceDeviceInfo['ServiceInvoice']['total']));?>
       </div>
@@ -265,25 +272,15 @@
         <?php	echo $this->Form->input('ServiceInvoice.payment',array('type'=>'text','div'=>false,'label'=>false,'class'=>''));?>
         <?php  echo $this->Form->select('ServiceInvoice.account_head_id', $accountsHead , array('escape' => false,'empty'=>'-  Select Head -', 'class'=>'required select2as'))?>
         <div id="WrapperAccountsCheckNumber">
-						
-		</div>
+ 		</div>
       </div>
     <div class="clr"></div>
     <?php echo $this->Form->end();?> 
-    
+     </div>
+      </div>
     </div>
-    
-    
-    </div>
-    </div>
-
-  </div>
- 
- 
-
-     
-     
-   <div class="clr"></div>
+   </div>
+    <div class="clr"></div>
     <div class="button_area">
 		<?php echo $this->Form->button('Save',array( 'class'=>'submit', 'id'=>'btn_save_clientDelivery','type'=>'submit'));?>
 		<?php echo $this->Form->button('Cancel',array('type'=>'reset','name'=>'reset','id'=>'Cancel'));?>
@@ -292,6 +289,40 @@
 
 <?php echo $this->Form->end();?>
 </div>
+<script type="text/javascript">
+$(function() {
+	$(document).ready(function() {
+ 	var dialogOptstempleteGeneralListss = {
+		title:'Comparigm Check List',
+		autoOpen: false,
+		height: 420,
+		width: 635,
+		modal: true,
+		//draggable:true,
+		//close: CloseFunction,
+		dialogClass: 'objectdetailsdialog',
+	};
+	$("#invoice7").dialog(dialogOptstempleteGeneralListss);
+	
+	$("#view_checklist12").on('click',function(e){
+		e.preventDefault();
+  		
+		 var service_info_id = $("#ServiceDeviceInfo_id").html();
+		 	 
+		var ulrs =siteurl+"DeviceCheckLists/comparigm_checklist/"+service_info_id;
+			$("#invoice7").load(ulrs, [], function(){
+			$("#invoice7").dialog("open");
+			//add_inventory
+			
+			
+ 		});
+  
+	});
+	
+	});
+	});
+ 
+</script>
 
 <style type="text/css">
 .purchase_return_class{
@@ -317,6 +348,19 @@
 	}
 #s2id_ServiceInvoiceIsTax , #s2id_ServiceInvoiceAccountHeadId{
 	width:90px !important;
+}
+#view_checklist12 {
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #d7d7d7;
+    border-radius: 5px;
+    color: #036fad;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 7px;
+    position: relative;
 }
 
 </style>

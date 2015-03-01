@@ -13,7 +13,7 @@
      	<?php echo $this->Form->input('PosCustomer.pos_customer_id',array('type'=>'hidden','div'=>false  ));?>
      	<?php //echo $this->Form->input('Group.group_id',array('type'=>'hidden','value'=>3,'div'=>false,'label'=>false,'class'=>'required'));?>
 		<?php echo $this->Form->label('PosCustomer.email_address', __('Email'.': <span class="star">*</span>', true) ); ?>
-		<?php echo $this->Form->input('PosCustomer.email_address',array('type'=>'text','div'=>false,'label'=>false, 'size'=>35, 'class'=>'email '  ));?>
+		<?php echo $this->Form->input('PosCustomer.email_address',array('type'=>'text','div'=>false,'label'=>false, 'size'=>35, 'class'=>'email required'  ));?>
 		
    </div>
  
@@ -173,9 +173,13 @@
 		<?php	echo $this->Form->checkbox('ServiceDeviceInfo.is_customer_confirmation',array('div'=>false,'label'=>false,'class'=>''));?>
 		</div>
          <div class="clr"></div> 
-       <div id="WrapperPurchaseImage" class="microcontroll">
-		<?php  	echo $this->Form->label('ServiceDeviceInfo.screenimage', __('Image'.' :<span class=star></span>', true) );?>
-        <?php   echo $this->Form->input('ServiceDeviceInfo.screenimage',array('type'=>'file','div'=>false,'label'=>false,'class'=>'' ));   ?>     
+       <div id="WrapperReciveImage" class="microcontroll">
+		<?php  	echo $this->Form->label('ServiceDeviceInfo.screenimage', __('Image 1'.' :<span class=star></span>', true) );?>
+        <?php   echo $this->Form->input('ServiceDeviceInfo.screenimage',array('type'=>'file','div'=>false,'label'=>false,'class'=>'' ));   ?> 
+        <?php  	echo $this->Form->label('ServiceDeviceInfo.screenimage1', __('Image 2'.' :<span class=star></span>', true) );?>
+        <?php   echo $this->Form->input('ServiceDeviceInfo.screenimage1',array('type'=>'file','div'=>false,'label'=>false,'class'=>'' ));   ?> 
+         <?php  	echo $this->Form->label('ServiceDeviceInfo.screenimage2', __('Image 3'.' :<span class=star></span>', true) );?>
+        <?php   echo $this->Form->input('ServiceDeviceInfo.screenimage2',array('type'=>'file','div'=>false,'label'=>false,'class'=>'' ));   ?>     
        </div>
       <div class="clr"></div> 
   

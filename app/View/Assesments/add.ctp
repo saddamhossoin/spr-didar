@@ -247,7 +247,7 @@
           <?php
 	 
 	 $assesmentServices = $serviceDeviceInfo['Assesment']['AssesmentService'];
-	// pr($assesmentServices );
+	 // pr($assesmentServices );
 	 $calculat_ser_tot = 0;
   if(!empty($assesmentServices)){
 	
@@ -262,9 +262,11 @@
 			else{
 				$class = ' class="assesmentservice"';
 			}
- 			  //pr($assesmentService['service_service_id']);
+ 			 //pr($assesmentService['service_service_id']);
 			 $serviceInfo =  $this->requestAction(array('controller' => 'ServiceServices', 'action' => 'getServiceInfo', $assesmentService['service_service_id'], 'return'));
-			  //pr($serviceInfo );
+			 
+			   //pr($serviceInfo );
+			 //  die();
   	?>
           <tr <?php echo $class;?> id="AssesmentServiceTr_<?php echo $assesmentService['id']?>">
             <td><?php echo $serviceInfo['ServiceService']['name'] ?></td>

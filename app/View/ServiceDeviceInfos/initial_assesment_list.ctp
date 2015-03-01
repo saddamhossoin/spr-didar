@@ -73,12 +73,12 @@
   <table cellspacing="0" cellpadding="0" border="0" style="" class="flexme3">
       <tbody>
 <?php
-  //pr($assessment_lists);die();
+   // pr($assessment_lists);die();
     $purchaseDate = '';
 	$i = 0;
 	foreach ($assessment_lists as $assessment_list):
 	
-	 
+	 // pr($assessment_list);die();
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
@@ -144,13 +144,13 @@
 				 echo "<div class='link_view' id='check_complete'>Waiting for password/pin</div>"; 
 				break;
 				case 16:
-				 echo "<div class='link_view' id='check_complete'>Sent Samsung/Nokia warranty</div>"; 
+				 echo "<div class='link_view' id='check_complete'>Sent SPR</div>"; 
 				break;
 				case 17:
-				 echo "<div class='link_view' id='check_complete'>Received from Samsung/Nokia warranty</div>"; 
+				 echo "<div class='link_view' id='check_complete'>Received from SPR</div>"; 
 				break;
 				case 18:
-				 echo "<div class='link_view' id='check_complete'>Returned at Samsung/Nokia warranty</div>"; 
+				 echo "<div class='link_view' id='check_complete'>Returned at SPR</div>"; 
 				break;
  			}
  			?>&nbsp;
@@ -159,10 +159,72 @@
 		<td align='left' class='alistname' width="11%"> <?php echo $assessment_list['ServiceDevice']['name']; ?>&nbsp; </td>
         <td align='left' class='alistname' width="11%"> <?php echo $assessment_list['ServiceDeviceInfo']['serial_no']; ?>&nbsp; </td>
          <td align='left' class='alistname' width="12%"> <?php 
-		 if($assessment_list['ServiceDeviceInfo']['status'] == 1){
-		 echo $assessment_list['UserModified']['firstname']." ".$assessment_list['UserModified']['lastname'];
-		 }else{
-		 echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];} ?>&nbsp; </td>
+		
+		 echo $assessment_list['ServiceDeviceInfo']['status']; 
+		 
+		 	switch($assessment_list['ServiceDeviceInfo']['status']){
+				case 1:
+				 echo $assessment_list['UserModified']['firstname']." ".$assessment_list['UserModified']['lastname'];
+				 
+				break;
+				case 2:
+				 echo $assessment_list['UserModified']['firstname']." ".$assessment_list['UserModified']['lastname'];
+				 
+				break;
+				case 3:
+				  echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];
+				break;
+				case 4:
+				  echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];
+				break;
+				case 5:
+				  echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];
+				break;
+				case 6:
+				 echo "Testing Unit"; 
+				break;
+				case 7:
+				 echo "<div class='link_view'>Testing</div>"; 
+				break;
+				case 8:
+				 echo "<div class='link_view'>Service delivery</div>"; 
+				break;
+				case 9:
+				 echo "<div class='link_view'> Client Delivered</div>"; 
+				break;
+				case 10:
+					 echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];
+				break;
+				case 11:
+				 echo $assessment_list['AssesmentApproveNote'][0]['User']['firstname']." ".$assessment_list['AssesmentApproveNote'][0]['User']['lastname'];
+				break;
+				case 12:
+				 echo "<div class='link_view' id='check_complete'>CUSTOMER COMMUNICATION</div>"; 
+				break;
+				case 13:
+				 echo "<div class='link_view' id='check_complete'>AWAITING CONFIRMATION QUOTE</div>"; 
+				break;
+				case 14:
+				 echo "<div class='link_view' id='check_complete'>WAITING FOR PARTS</div>"; 
+				break;
+				case 15:
+				 echo "<div class='link_view' id='check_complete'>Waiting for password/pin</div>"; 
+				break;
+				case 16:
+				 echo "Sent SPR"; 
+				break;
+				case 17:
+				 echo "Received from SPR"; 
+				break;
+				case 18:
+				 echo "Returned at SPR"; 
+				break;
+ 			}
+		 
+		 
+	 
+			  ?>&nbsp;
+        </td>
         <td align='left' class='alistname' width="6%"> <?php echo $assessment_list['ServiceInvoice']['inventory_total']; ?>&nbsp; </td>
         <td align='left' class='alistname' width="6%"> <?php echo $assessment_list['ServiceInvoice']['service_total']; ?>&nbsp; </td>
          <td class="actions" width="19%" class='alistname link_link'> 
@@ -170,9 +232,13 @@
         
 
          <?php 
+		 
+		  echo $this->Html->link(__('Assesment', true), array('controller'=>'Assesments','action' => 'add', $assessment_list['ServiceDeviceInfo']['id']),array('class'=>'receive_invoice action_link AssesmentAdd' )); 
+		  
 		  if(!empty($assessment_list['Assesment']['id'] )){
 		  
-		 echo $this->Html->link(__('Assesment', true), array('controller'=>'Assesments','action' => 'recieve', $assessment_list['ServiceDeviceInfo']['id']),array('class'=>'receive_invoice action_link AssesmentPrint' ));} ?>
+		
+          echo $this->Html->link(__('View', true), array('controller'=>'Assesments','action' => 'recieve', $assessment_list['ServiceDeviceInfo']['id']),array('class'=>'receive_invoice action_link AssesmentPrint' ));} ?>
         
 <?php  if($assessment_list['ServiceDeviceInfo']['status']==2 || $assessment_list['ServiceDeviceInfo']['status']==12  || $assessment_list['ServiceDeviceInfo']['status']==13 || $assessment_list['ServiceDeviceInfo']['status']==14){?>
 	   

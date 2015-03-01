@@ -58,7 +58,7 @@ jQuery(function($){
 $("#ServiceDeviceInfoSerialNo").on('focusout',function(){
 	
 	var val = $(this).val();
-	$(".overlaydiv").fadeIn(1000);
+	//$(".overlaydiv").fadeIn(1000);
 		$.ajax({
 				type: "GET",
 				url:siteurl+"ServiceDeviceInfos/checkDeviceSerial/"+val,
@@ -69,7 +69,7 @@ $("#ServiceDeviceInfoSerialNo").on('focusout',function(){
 					$(".overlaydiv").fadeOut(1000);
 				}else{
 					$(".overlaydiv").fadeOut(1000);
-					$("#showSerialInfo").fadeIn();
+					//$("#showSerialInfo").fadeIn();
 					$("#showSerialInfo").attr("title",val);
 				}
 				 }
@@ -260,7 +260,7 @@ $("#ServiceDeviceInfoIsPhoneBlock11").on('click',function(e){
 			select: function( event, ui ) {
  				$("#ServiceDeviceInfoServiceDeviceId").val(ui.item.value);
 				$("#ServiceDeviceName").val(ui.item.label);
-				 $(".overlaydiv").fadeIn(1000);
+				 //$(".overlaydiv").fadeIn(1000);
 				$.get( siteurl+"ServiceDevices/getDeviceDetails/"+ui.item.value, function( data ) {
  				
 				var obj = jQuery.parseJSON( data);	
@@ -489,10 +489,13 @@ $("#ServiceDeviceInfoIsPhoneBlock11").on('click',function(e){
 					}
 				},
 			   success: function(response1) {
- 				   response1 = parseInt(response1);
+ 				   alert(response1);
+				   response1 = parseInt(response1);
+				   
   					$('.ajax_status').hide(); 
 					$('.ajax-save-message').hide().html("Successfully Saved").fadeIn(); 
 					if(response1){
+						
  						var ulrs =siteurl+"ServiceDeviceInfos/recieve/"+response1;
  						$("#invoiceReload").load(ulrs, [], function(){
 							$("#invoiceReload").dialog("open");

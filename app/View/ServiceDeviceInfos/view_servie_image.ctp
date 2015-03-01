@@ -1,7 +1,17 @@
-<?php if(!empty($serviceDeviceInfo)){
+<?php 
+//pr($serviceDeviceInfo);
+if(!empty($serviceDeviceInfo)){
 		if(!empty($serviceDeviceInfo['ServiceDeviceInfo']['screenimage'])){
 			echo "<h1 class='title_recive'> Service Recive</h1>";
 			echo $this->Html->image('../'.$serviceDeviceInfo['ServiceDeviceInfo']['screenimage'], array("alt" => "No Image" ,"border"=>"0" ));
+		}
+		if(!empty($serviceDeviceInfo['ServiceDeviceInfo']['screenimage1'])){
+			echo "<h1 class='title_recive'> Service Recive</h1>";
+			echo $this->Html->image('../'.$serviceDeviceInfo['ServiceDeviceInfo']['screenimage1'], array("alt" => "No Image" ,"border"=>"0" ));
+		}
+		if(!empty($serviceDeviceInfo['ServiceDeviceInfo']['screenimage2'])){
+			echo "<h1 class='title_recive'> Service Recive</h1>";
+			echo $this->Html->image('../'.$serviceDeviceInfo['ServiceDeviceInfo']['screenimage2'], array("alt" => "No Image" ,"border"=>"0" ));
 		}
  		if(!empty($assesmentinfo['Assesment']['asscheckImage'])){
 			echo "<h1 class='title_recive'> Assesment Image</h1>";

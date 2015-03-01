@@ -22,7 +22,7 @@
                                         <tr>
                                             <td class="headerContent">
                                             
-                                            <div style="font-size:30px; color:#336699; padding:15px; text-decoration:underline;"> Solution Point Roma(SPR)</div>
+                                            <div style="font-size:30px; color:#336699; padding:15px; text-decoration:underline;"> Iriparo</div>
                                             <div style="height:2px; background:#000000; width:100%">&nbsp;</div>
                                             
                                             </td>
@@ -70,7 +70,7 @@
                                                             	<tr>
                                                                 	<td valign="middle" class="templateButtonContent" style=" background:#4A7296; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;">
                                                                     	<div mc:edit="std_content01">
-                                                                        	<a href=" <?php echo 'https://'.env('SERVER_NAME');?>" target="_blank" style="color:#ffffff; font-weight:bold;"> Solution Point Roma </a>
+                                                                        	<a href=" <?php echo 'https://'.env('SERVER_NAME');?>" target="_blank" style="color:#ffffff; font-weight:bold;"> Iripair </a>
                                                                         </div>
                                                                     </td>
                                                                 </tr>
@@ -98,7 +98,7 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_footer">
-																<em>Copyright &copy; SPR LLC, All rights reserved.</em>
+																<em>Copyright &copy; Iripair LLC, All rights reserved.</em>
 																<br />
                                                             </div>
                                                         </td>

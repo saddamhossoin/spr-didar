@@ -66,7 +66,7 @@ jQuery(function($){
 
  		 if($.isNumeric( enterQuanitity )   && enterQuanitity != "0" ){
  		 
-		 $('.overlaydiv').fadeIn();
+		 $('.overlaydivsmall').fadeIn();
 			$('.ajax-save-message').hide().fadeOut(); 
 	  
  			 var data= $(this).closest('form').serialize();
@@ -78,7 +78,7 @@ jQuery(function($){
 						 //alert(response);
 				 	    var obj = jQuery.parseJSON( response);	
 						
-					  	$('.overlaydiv').hide();
+					  	$('.overlaydivsmall').hide();
 						$("#row_"+id[1]).remove();
 						 
 						 $(".reciveDeviceAssementInventory table tbody").append("<tr class='inventory' id='AssesmentInventoryTr_"+obj.AssesmentInventory.id+"'><td>"+obj.PosProduct.name+" </td><td> "+obj.PosProduct.PosBrand.name+"</td><td> "+obj.PosProduct.PosPcategory.name+"</td><td> "+obj.AssesmentInventory.quantity+"</td><td> "+obj.AssesmentInventory.price+"</td><td class='inventorytotalpriceli'> "+obj.AssesmentInventory.price*obj.AssesmentInventory.quantity+"</td><td class='actions onlyfly'><a id='AssesmentInventoryRemove_"+obj.AssesmentInventory.id+"' class='AssesmentInventoryRemove link_view action_link' href='#'>Remove</a></td></tr>");

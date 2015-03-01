@@ -123,12 +123,12 @@ function filtercondition($data=null)
 					  	 }
 					  }
 					}
-				
+				//pr($dataarray);die();
 				$this->request->data['ServiceDeviceInfo']['checklist'] =  serialize($dataarray);	
 			 
 			if ($this->ServiceDeviceInfo->save( $this->request->data['ServiceDeviceInfo'])) {
 			
-			if(!empty($this->request->data['ServiceDeviceInfo']['note'])){
+			//if(!empty($this->request->data['ServiceDeviceInfo']['note'])){
 			
 				$this->request->data['AssesmentApproveNote']['user_id'] = $this->Auth->user('id');
 				$this->request->data['AssesmentApproveNote']['notes'] =$this->request->data['ServiceDeviceInfo']['note'];
@@ -144,9 +144,9 @@ function filtercondition($data=null)
 					}else {
 						echo "0";
 					}
-				}else{
-				echo '10';
-				}
+				//}else{
+				//echo '10';
+				//}
 			}else{
 					echo '0';
 				}

@@ -122,7 +122,7 @@ class ServiceDeviceInfosController extends AppController {
 			}
 			//==================== For service Device Recive Image ================
 			$this->ServiceDeviceInfo->recursive = -1;
-			$service_recive  = $this->ServiceDeviceInfo->find('first',array('fields'=>array('id','screenimage'),'conditions'=>array('ServiceDeviceInfo.id'=> $id)));
+			$service_recive  = $this->ServiceDeviceInfo->find('first',array('fields'=>array('id','screenimage','screenimage1','screenimage2'),'conditions'=>array('ServiceDeviceInfo.id'=> $id)));
 		 
  				$this->set("serviceDeviceInfo", $service_recive );
  		 
@@ -346,27 +346,28 @@ class ServiceDeviceInfosController extends AppController {
 					'className' => 'PosCustomer',
 					'foreignKey' => 'pos_customer_id',
 				//	'conditions' => array($conditionarrayCustomer)
+				'fields'=>array('id','name')
 					),
 					'UserModified' => array(
 					'className' => 'User',
 					'foreignKey' => 'modified_by',
+					'recursive'=>-1,
+					'fields'=>array('id','email_address','firstname','lastname')
 				//	'conditions' => array($conditionarrayCustomer)
 					),
 					
 				),
-			 'hasMany' => array(
+			  'hasMany' => array(
 			   'AssesmentApproveNote' => array(
 					'className' => 'AssesmentApproveNote',
 					'foreignKey' => 'service_device_info_id',
-				 	'limit' => 1,
-					'Order'=>array('AssesmentApproveNote.modified'=>'desc')
-					),
-					
-					 
+					'order' => 'modified DESC',
+					'limit'=>1
+						),
+  					), 
  				)
-          ) );
-		  
-		 
+            );
+			
 		  
     	if( ! empty($this->request->data ) ){
             $this->Session->delete('ServiceDeviceInfoSearch');
@@ -395,25 +396,31 @@ class ServiceDeviceInfosController extends AppController {
         		);
 				
 			
-		
-		$this->ServiceDeviceInfo->User->unbindModelAll();	
+		 
+		$this->ServiceDeviceInfo->User->unbindModelAll();
+		$this->ServiceDeviceInfo->UserModified->unbindModelAll();
+			
 		$this->ServiceDeviceInfo->ServiceDevice->unbindModelAll();
 		$this->ServiceDeviceInfo->PosCustomer->unbindModelAll();
 		$this->ServiceDeviceInfo->ServiceInvoice->unbindModelAll();
 		$this->ServiceDeviceInfo->Assesment->unbindModelAll();
 		$this->ServiceDeviceInfo->ServiceDeviceAcessory->unbindModelAll();
 		$this->ServiceDeviceInfo->ServiceDeviceDefect->unbindModelAll();
-		$this->ServiceDeviceInfo->AssesmentApproveNote->unbindModelAll();
-		$this->ServiceDeviceInfo->AssesmentApproveNote->bindModel(array('belongsTo'=>array( 'User' => array(
+	 	$this->ServiceDeviceInfo->AssesmentApproveNote->unbindModelAll();
+	 	$this->ServiceDeviceInfo->AssesmentApproveNote->bindModel(array('belongsTo'=>array( 'User' => array(
 					'className' => 'User',
 					'foreignKey' => 'user_id',
- 					),)));	
+					'fields'=>array('id','email_address','firstname','lastname')
+ 					),)));	 
 		
 			
 		$this->ServiceDeviceInfo->recursive =2;
-		//pr($this->paginate());die();
 		
-		 	//var_dump($this->paginate());
+		// $this->ServiceDeviceInfo->Behaviors->attach('Containable');
+		//$this->Post->Behaviors->load('Containable');
+		
+		
+		// $this->paginate = array('fields'=>array('User.id','User.email_address','User.firstname','User.lastname'));
 		$this->set('assessment_lists', $this->paginate());
 		//pr($this->paginate());die();
         $this->set('sortoption',array());
@@ -1037,10 +1044,7 @@ class ServiceDeviceInfosController extends AppController {
 	function add() {
      if ($this->RequestHandler->isAjax()) {	
 		if (!empty($this->request->data)) {
-		
-		
- 		// pr($this->request->data);die(); <strong>serviceBarcode/SPR-00020.png</strong>
-	//================== New user and current user save ===============
+ 	//================== New user and current user save ===============
 		$this->loadModel('User');
 		$this->loadModel('PosCustomer');
 		
@@ -1094,50 +1098,11 @@ class ServiceDeviceInfosController extends AppController {
 			$this->PosCustomer->create();
  			$customerSave = $this->PosCustomer->save($this->request->data['PosCustomer']);
 			$PosCustomerSaveId = $this->PosCustomer->getLastInsertId();
-			
-			
-			 //==== mail notification for password Entry Start =====================//
-           
-        $fu=$this->User->find('first',array('conditions'=>array('User.email_address'=>$userdata['User']['email_address'])));
-     	 if($fu)  {
-            if($fu['User']['active'])
-                    {
-                        $key = Security::hash(String::uuid(),'sha512',true);
-      					$url = Router::url( array('controller'=>'users','action'=>'reset'), true ).'/'.$key;
-                        $ms=$url;
-                        $fu['User']['tokenhash']=$key;
-            			$this->User->id=$fu['User']['id'];
-                        if($this->User->saveField('tokenhash',$fu['User']['tokenhash'])){
-       			//============Email================//
-               			$this->set('ms', $ms);
-       					App::uses('CakeEmail', 'Network/Email');
-						$email = new CakeEmail();
-						$email->from("romacinecitta@iriparo.com")
-						->to($userdata['User']['email_address'])
-						->subject('[Iripair] Please Reset your password')
-						->template('default')
-						->emailFormat('html')
-						->viewVars(array('Your Reset Password link  ' =>$ms))
-						->send("Hey, we heard you lost your iripair password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br> iripair Team");
-										   if ($email->send()) {
-         				$this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
-               } else {
-                     $this->Session->setFlash(__('Failed to send the confirmation email. Please contact the administrator at support@xxx',
-true), 'fail_message');
-               } 
-           //============EndEmail=============//
-                        }
-                        else{
-     					 $this->Session->setFlash(__('Error Generating Reset link', true),'warnning_message');
-                  //$this->Session->setFlash("Error Generating Reset link");
-                        }
-                    }
-                    else
-                    {
-      				$this->Session->setFlash(__('This Account is not Active yet.Check Your mail to activate it', true),'warnning_message');
-                     }
-                  }
-          //==== mail notification for password Entry End =====================//
+ 			
+			 	//==== mail notification for password Entry Start =====================//
+			 $this->sendCreatedUserMain($userdata['User']['email_address'] , $id);
+				
+           		//==== mail notification for password Entry End =====================//
   		}
  	
 		
@@ -1170,19 +1135,39 @@ true), 'fail_message');
 				} 
 				$this->request->data['ServiceDeviceInfo']['screenimage'] = $output['file_path'];
 			}
-			
-			else{
+ 			else{
 				$this->request->data['ServiceDeviceInfo']['screenimage'] ='';
+				}
+ 				if(!empty($this->request->data['ServiceDeviceInfo']['screenimage1']['name'])){
+				try{
+					$output = $this->ImageUploader->upload($this->request->data['ServiceDeviceInfo']['screenimage1'],$fileDestination,$options);     	}
+				catch(Exception $e)
+				{ 
+					$output = array('bool'=>FALSE,'error_message'=>$e->getMessage());
+				} 
+				$this->request->data['ServiceDeviceInfo']['screenimage1'] = $output['file_path'];
+			}
+ 			else{
+				$this->request->data['ServiceDeviceInfo']['screenimage1'] ='';
+				}
+ 			if(!empty($this->request->data['ServiceDeviceInfo']['screenimage2']['name'])){
+				try{
+					$output = $this->ImageUploader->upload($this->request->data['ServiceDeviceInfo']['screenimage2'],$fileDestination,$options);     }
+				catch(Exception $e)
+				{ 
+					$output = array('bool'=>FALSE,'error_message'=>$e->getMessage());
+				} 
+				$this->request->data['ServiceDeviceInfo']['screenimage2'] = $output['file_path'];
+			}
+ 			else{
+				$this->request->data['ServiceDeviceInfo']['screenimage2'] ='';
 				}
 			  
 		//============================Invoice image=======================================//
-		
-		
-		
+ 		
  				$this->ServiceDeviceInfo->create();
 				if ($this->ServiceDeviceInfo->save($this->request->data['ServiceDeviceInfo'])) {
-					
-					$serviceDeviceSaveId = $this->ServiceDeviceInfo->getLastInsertId();
+ 					$serviceDeviceSaveId = $this->ServiceDeviceInfo->getLastInsertId();
 					//==================== Generate Barcode ===============
 					$this->add_barcode($this->request->data['ServiceDeviceInfo']['pos_customer_id'] ,$serviceDeviceSaveId , $this->request->data['ServiceDevice']['name']);
 
@@ -1200,6 +1185,7 @@ true), 'fail_message');
 						}
 					}
 					
+					
 					if(!empty($this->request->data['ServiceDeviceDefect'])){
 	
 						$this->loadModel('ServiceDeviceDefect');
@@ -1214,6 +1200,10 @@ true), 'fail_message');
 					}
  					 
 					echo $serviceDeviceSaveId;
+					 	//==== mail notification for password Entry Start =====================//
+			 $this->sendCreatedUserMain( $serviceDeviceSaveId);
+				
+           		//==== mail notification for password Entry End =====================//
 					 
 				 
 				} else {
@@ -1226,11 +1216,96 @@ true), 'fail_message');
 				exit(); 
 		}
       }
-		$users = $this->ServiceDeviceInfo->User->find('list');
-		$serviceDevices = $this->ServiceDeviceInfo->ServiceDevice->find('list');
-		$this->set(compact('users', 'serviceDevices'));
+		//$users = $this->ServiceDeviceInfo->User->find('list');
+		//$serviceDevices = $this->ServiceDeviceInfo->ServiceDevice->find('list');
+		//$this->set(compact('users', 'serviceDevices'));
 		$this->set('page_titles', 'New ServiceDeviceInfo'); 
  
+	}
+	
+	//========================== User Registration Mail Function ============
+	function  sendCreatedUserMain( $id = null){
+	//die('jewel');
+		//Configure::write('debug',2);  
+		//$email = 'romacinecitta@iriparo.com';
+		$this->autoRender = false;
+		
+		//====================== Service Invoice ==================
+		 $this->ServiceDeviceInfo->User->unbindModelAll();
+	  $this->ServiceDeviceInfo->ServiceDevice->unbindModelAll();
+	  $this->ServiceDeviceInfo->ServiceInvoice->unbindModelAll();
+	  $this->ServiceDeviceInfo->ServiceDeviceAcessory->unbindModel(array('belongsTo'=>array('ServiceDeviceInfo')));
+	  $this->ServiceDeviceInfo->ServiceDeviceDefect->unbindModel(array('belongsTo'=>array('ServiceDeviceInfo')));
+	  $this->ServiceDeviceInfo->Assesment->unbindModelAll();
+	  		
+	
+	  $this->ServiceDeviceInfo->ServiceDevice->bindModel(array(
+	  	'belongsTo'=>array('PosBrand'=>array(
+		'className' => 'PosBrand',
+		'foreignKey' => 'pos_brand_id',
+		'dependent' => false,
+		))), false);  
+		 $this->ServiceDeviceInfo->bindModel(array(
+	  	'belongsTo'=>array('UserCreated'=>array(
+		'className' => 'User',
+		'foreignKey' => 'created_by',
+		'dependent' => false,
+	 	))), false);  
+			
+			$this->ServiceDeviceInfo->recursive = 2;
+		 	$deviceRecive=$this->ServiceDeviceInfo->find('first',array('conditions'=>array('ServiceDeviceInfo.id'=>$id)));
+			 
+			
+		$is_repet = $this->ServiceDeviceInfo->find('first',array('field'=>array('id'),'conditions'=>array('ServiceDeviceInfo.serial_no'=>$deviceRecive['ServiceDeviceInfo']['serial_no'] ,'ServiceDeviceInfo.id !='=>$deviceRecive['ServiceDeviceInfo']['id']  ),'recursive'=>-1));
+		 
+		//=========================== End Service Recive =================
+		/* $this->set('deviceRecive', $deviceRecive);
+		  $key = Security::hash(String::uuid(),'sha512',true);
+      					$url = Router::url( array('controller'=>'users','action'=>'reset'), true ).'/'.$key;
+                        $ms=$url;
+		 $this->set('urllink' , $ms);
+		 $this->set('is_repet' ,$is_repet);*/
+		// die($deviceRecive['User']['email_address']);
+     	 if($deviceRecive)  {
+            if($deviceRecive['User']['active'])
+                    {
+                        $key = Security::hash(String::uuid(),'sha512',true);
+      					$url = Router::url( array('controller'=>'users','action'=>'reset'), true ).'/'.$key;
+                        $ms=$url;
+                        $fu['User']['tokenhash']=$key;
+						$this->loadModel('User');
+            			$this->User->id=$deviceRecive['User']['id'];
+                        if($this->User->saveField('tokenhash',$fu['User']['tokenhash'])){
+       			//============Email================//
+               			$this->set('ms', $ms);
+       					App::uses('CakeEmail', 'Network/Email');
+						$email = new CakeEmail();
+						$email->from("romacinecitta@iriparo.com")
+						->to($deviceRecive['User']['email_address'])
+						//->to('saddamhossoin@gmail.com')
+						->subject('[Iripair] Please Reset your password')
+						->template('ServiceDeviceInfoUserAdd')
+						->emailFormat('html')
+						->viewVars(array('deviceRecive' => $deviceRecive,'urllink' =>$ms, 'is_repet'=>$is_repet));
+						 
+						if ($email->send()) {
+  							return true;
+               			}else {
+							$this->Session->setFlash(__('Failed to send the confirmation email.',true), 'fail_message');
+							return false;
+						} 
+                       }
+                      else{
+     					 	$this->Session->setFlash(__('Error Generating Reset link', true),'warnning_message');
+                  			return false;
+                        }
+                    }
+                    else{
+		      				$this->Session->setFlash(__('This Account is not Active yet.Check Your mail to activate it', true),'warnning_message');
+							return false;
+                     }
+                  } 
+		
 	}
 	
 	//========================== Generate Barcode ==========================
@@ -1240,7 +1315,7 @@ true), 'fail_message');
 			Configure::write('debug', 0); 
 			$this->autoRender = false;
 			
- 		if (!empty($customer_id ) && !empty($invoice_id ) ) {
+ 			if (!empty($customer_id ) && !empty($invoice_id ) ) {
  			 
 			$barcode=new BarcodeHelper();
  			// Generate Barcode data
@@ -1249,7 +1324,7 @@ true), 'fail_message');
 			$barcode->hideCodeType();
 			$barcode->setSize(40,120);
  
- 			$data_to_encode = "iripair-".sprintf('%05d', $invoice_id);
+ 			$data_to_encode = "iripair".sprintf('%05d', $invoice_id);
 			$device_name = explode("-",$device_name);
 			$barcode->setProductName($device_name[0]); 
 
@@ -1258,7 +1333,7 @@ true), 'fail_message');
 			// Generate filename    
 			$maxNumberIt = sprintf('%05d', $invoice_id); 
 			   
-			$file = 'img/serviceBarcode/iripair-'.$maxNumberIt.'.png';
+			$file = 'img/serviceBarcode/iripair'.$maxNumberIt.'.png';
 			//echo $file;
 			$br_data['ServiceDeviceInfo']['barcode_file'] = $file;
 		
@@ -1279,6 +1354,7 @@ true), 'fail_message');
 	  $this->ServiceDeviceInfo->ServiceInvoice->unbindModelAll();
 	  $this->ServiceDeviceInfo->ServiceDeviceAcessory->unbindModel(array('belongsTo'=>array('ServiceDeviceInfo')));
 	  $this->ServiceDeviceInfo->ServiceDeviceDefect->unbindModel(array('belongsTo'=>array('ServiceDeviceInfo')));
+	  $this->ServiceDeviceInfo->Assesment->unbindModelAll();
 	  		
 	
 	  $this->ServiceDeviceInfo->ServiceDevice->bindModel(array(
@@ -1287,6 +1363,12 @@ true), 'fail_message');
 		'foreignKey' => 'pos_brand_id',
 		'dependent' => false,
 		))), false);  
+		 $this->ServiceDeviceInfo->bindModel(array(
+	  	'belongsTo'=>array('UserCreated'=>array(
+		'className' => 'User',
+		'foreignKey' => 'created_by',
+		'dependent' => false,
+	 	))), false);  
 			
 			$this->ServiceDeviceInfo->recursive = 2;
 		 	$deviceRecive=$this->ServiceDeviceInfo->find('first',array('conditions'=>array('ServiceDeviceInfo.id'=>$id)));

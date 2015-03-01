@@ -59,15 +59,15 @@
     </div>
   </div>
   <div class="customer_right_div">
-    <h2 class="company_heading_right">SOLUTION POINT ROMA</h2>
-    <div class="customer_info_right">
-      <p> Via Dei Fulvi,14</p>
-      <p> 00174 Roma - Italia</p>
-      <p> Telefono +39 06 60672975</p>
-      <p> P.IVA IT12134951008</p>
-      <p> www.solutionpointroma.it</p>
-      <p> skype_solution_point</p>
-    </div>
+     <h1 class="top_title">iRiparo .</h1>
+      <p class="address">  Via Calpurnia Fiamma, 67</br>
+       00175 - Roma<br />
+       Tel   :06764734<br />
+       P.IVA :12534471003<br />
+       www.iriparoroma-cinecitta.it<br />
+       skype_iriparo_cenecitta<br />
+       Email :irparo.cenecitta@gmail.com<br />
+       </p>
   </div>
 </div>
 <div class="product_table_div">

@@ -143,11 +143,15 @@
     <div id="invoicelogo">
 	   </div>
  	<div id="invoicetitle">
-      <h1 class="top_title">SOLUTION POINT ROMA .</h1>
-      <p class="address"> Via Dei Fulvi 14,roma 00174.<br />
-         P.Iva 12134951008 , C.F. MIAMMM88B03Z249C<br />
-         Tel-0660672975 , mob-3283205866 	<br />
-        E-mail: deshhospital@yahoo.com</p>
+      <h1 class="top_title">iRiparo .</h1>
+      <p class="address">  Via Calpurnia Fiamma, 67</br>
+       00175 - Roma<br />
+       Tel   :06764734<br />
+       P.IVA :12534471003<br />
+       www.iriparoroma-cinecitta.it<br />
+       skype_iriparo_cenecitta<br />
+       Email :irparo.cenecitta@gmail.com<br />
+       </p>
     </div>
      <div id="invoicelogo2">
 	 <?php //echo $this->Html->image("reportlayout/leftlogo.JPG", array("alt" => "" ,"width"=>"74" ,"height"=>"74"));?>   </div>

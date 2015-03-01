@@ -45,17 +45,15 @@
     </div>
   </div>
   <div class="customer_right_div">
-    <h2 class="company_heading_right">SOLUTION POINT ROMA</h2>
+    <h2 class="company_heading_right">iRiparo</h2>
     <div class="customer_info_right">
-      <p> Via Dei Fulvi,14</p>
-      <p> Porta Furba - Quadraro</p>
-      <p> Roma(RM)</p>
-      <p> Lazio</p>
-      <p> Italia</p>
-      <p> CAP: 00174</p>
-      <p> CALL US: 0039 06.60.67.29.75</p>
-      <p><span style="font-weight:bold"> E-mail : </span>solutionpointroma@yahoo.com</p>
-      <p> P.IVA: 12134951008</p>
+      <p> Via Calpurnia Fiamma, 67</p>
+      <p> 00175 - Roma</p>
+      <p> Tel   :06764734</p>
+      <p> P.IVA :12534471003</p>
+      <p> www.iriparoroma-cinecitta.it</p>
+      <p> skype_iriparo_cenecitta</p>
+      <p> Email :irparo.cenecitta@gmail.com</p>
     </div>
   </div>
 </div>

@@ -189,8 +189,8 @@
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms))
-								->send("Hey, we heard you lost your SolutionPointRoma password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>
-The SolutionPointRoma Team");
+								->send("Hey, we heard you lost your iRiparo password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>
+The iRiparo Team");
                          	 if ($email->send()) {
 					  	 $this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
                } else {
@@ -310,8 +310,8 @@ true), 'fail_message');
 								->template('default')
 								->emailFormat('html')
 								->viewVars(array('Your Reset Password link  ' =>$ms))
-								->send("Hey, we heard you lost your SolutionPointRoma password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>
-The SolutionPointRoma Team");
+								->send("Hey, we heard you lost your iRiparo password.Say it ain't so!<br>Use the following link reset your password:<br><br>".$ms."<br><br>Thanks,<br>
+The iRiparo Team");
                          	 if ($email->send()) {
 					  	 $this->Session->setFlash(__('Your new password has been sent, please check your inbox', true),'success_message');
                } else {

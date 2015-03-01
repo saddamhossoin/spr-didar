@@ -3,36 +3,36 @@
 <head>
 <title>Report For SPR</title>
 <style type="text/css">
- 
 .print_img{
 	padding-right:10px;
 }
 .Print_Button{
    font-weight:bold;
 }
- 
- 
 </style>
 </head>
 
 <body>
-<?php  //var_dump($deviceRecive);
+<?php // pr($deviceRecive);
   $data_important = array(0=>'No',1=>'Yes');?>
 	<div class="full_div_report_wrapper">
     <span class='Print_Button'>
     <span class='print_img'>&nbsp;&nbsp;</span> &nbsp;Print</span>
 		<div class="sec_div_wrapper">
+         <?php  echo $this->Html->image("iripair_invoice.jpg", array("class"=>"iripairbackground","alt" => $deviceRecive['ServiceDeviceInfo']['barcode_file'] ));?> 
+        
+        <div class="bg_div">
 			
           <div class="print_left">
           <div class="bardoce_print"> <?php  echo $this->Html->image("../".$deviceRecive['ServiceDeviceInfo']['barcode_file'], array("class"=>"barcode","alt" => $deviceRecive['ServiceDeviceInfo']['barcode_file'] ));?> </div>
-              <div><span class="title_s">Nome </span>&nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
-            <div> <span class="title_s">Telefono </span>&nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
-            <div> <span class="title_s">Email </span>&nbsp;<?php echo $deviceRecive['User']['email_address']; ?></div>
-            <div> <span class="title_s">Marca/Modello </span>&nbsp; <?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
-            <div><span class="title_s">Product </span> &nbsp; <?php echo $deviceRecive['ServiceDevice']['name'];?></div>
-            <div><span class="title_s">IMEI </span> &nbsp; <?php	echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
+              <div><span class="title_s">Nome</span>&nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
+            <div> <span class="title_s">Telefono</span>&nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
+            <div> <span class="title_s" >Email</span>&nbsp;<span style="text-transform:lowercase"><?php echo $deviceRecive['User']['email_address']; ?></span></div>
+            <div> <span class="title_s">Marca/Modello</span>&nbsp;<?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
+            <div><span class="title_s">Product</span>&nbsp;<?php echo $deviceRecive['ServiceDevice']['name'];?></div>
+            <div><span class="title_s">IMEI</span>&nbsp;<?php echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
              <div style="clear:both;"></div>
-            <div style="width:267px;"><span class="title_s">Accessori </span> &nbsp;<?php
+            <div style="width:267px;"><span class="title_s">Accessori</span>&nbsp;<?php
                 if(!empty($deviceRecive['ServiceDeviceAcessory'])){
                     foreach($deviceRecive['ServiceDeviceAcessory'] as $accesorylist){
                         echo  $accesorylist['ServiceAcessory']['name']  ." , ";
@@ -41,9 +41,8 @@
                         echo 'Acessory not mention!!!';
             	}?>
         </div>
-            <div style="line-height: 13px;"><span class="title_s">Difetto </span> &nbsp;
-			<?php
-				if(!empty($deviceRecive['ServiceDeviceDefect'])){
+            <div style="line-height: 13px;"><span class="title_s">Difetto</span>&nbsp;<?php
+			if(!empty($deviceRecive['ServiceDeviceDefect'])){
 					foreach($deviceRecive['ServiceDeviceDefect'] as $defectlist){
 						echo  $defectlist['ServiceDefect']['name']  ." , ";
 					}
@@ -82,25 +81,25 @@
      
     <div style="clear:both">&nbsp;</div>
         
-    <div style="height: 100px; margin-left: 28px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;  <?php	echo $deviceRecive['ServiceDeviceInfo']['description']; 
+    <div style="height: 100px; margin-left: 28px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;<?php	echo $deviceRecive['ServiceDeviceInfo']['description']; 
 	//pr();
 	
 	?> </div>
     <div class="inovice_fotter">
-    <span><?php echo $deviceRecive['User']['counter_name'];?> &nbsp; &nbsp;<?php echo date('d/m/y');?></span>
+    <span style="white-space:nowrap"><?php echo $deviceRecive['UserCreated']['counter_name'];?> &nbsp; &nbsp;<?php echo date('d/m/y');?></span>
     <span></span>
           </div>
        </div>   
           <div class="print_right">
           <div class="bardoce_print"> <?php  echo $this->Html->image("../".$deviceRecive['ServiceDeviceInfo']['barcode_file'], array("class"=>"barcode","alt" => $deviceRecive['ServiceDeviceInfo']['barcode_file'] ));?> </div>
-              <div><span class="title_s">Nome </span>&nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
-            <div> <span class="title_s">Telefono </span>&nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
-            <div> <span class="title_s">Email </span>&nbsp;<?php echo $deviceRecive['User']['email_address']; ?></div>
-            <div> <span class="title_s">Marca/Modello </span>&nbsp; <?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
-            <div><span class="title_s">Product </span> &nbsp; <?php echo $deviceRecive['ServiceDevice']['name'];?></div>
-            <div><span class="title_s">IMEI </span> &nbsp; <?php	echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
+              <div><span class="title_s">Nome</span>&nbsp;<?php echo $deviceRecive['User']['firstname'];?></div>
+            <div> <span class="title_s">Telefono</span>&nbsp;<?php echo $deviceRecive['User']['phone']; ?></div>
+            <div> <span class="title_s">Email</span>&nbsp;<span style="text-transform:lowercase"><?php echo $deviceRecive['User']['email_address']; ?></span></div>
+            <div> <span class="title_s">Marca/Modello</span>&nbsp;<?php echo $deviceRecive['ServiceDevice']['PosBrand']['name'];?></div>
+            <div><span class="title_s">Product</span>&nbsp;<?php echo $deviceRecive['ServiceDevice']['name'];?></div>
+            <div><span class="title_s">IMEI</span>&nbsp;<?php echo $deviceRecive['ServiceDeviceInfo']['serial_no']; ?></div>
              <div style="clear:both;"></div>
-            <div style="width:267px;"><span class="title_s">Accessori </span> &nbsp;<?php
+            <div style="width:267px;"><span class="title_s">Accessori</span>&nbsp;<?php
                 if(!empty($deviceRecive['ServiceDeviceAcessory'])){
                     foreach($deviceRecive['ServiceDeviceAcessory'] as $accesorylist){
                         echo  $accesorylist['ServiceAcessory']['name']  ." , ";
@@ -109,9 +108,8 @@
                         echo 'Acessory not mention!!!';
             	}?>
         </div>
-            <div style="line-height: 13px;"><span class="title_s">Difetto </span> &nbsp;
-			<?php
-				if(!empty($deviceRecive['ServiceDeviceDefect'])){
+            <div style="line-height: 13px;"><span class="title_s">Difetto</span>&nbsp;<?php
+			if(!empty($deviceRecive['ServiceDeviceDefect'])){
 					foreach($deviceRecive['ServiceDeviceDefect'] as $defectlist){
 						echo  $defectlist['ServiceDefect']['name']  ." , ";
 					}
@@ -150,37 +148,125 @@
      
     <div style="clear:both">&nbsp;</div>
         
-    <div style="height: 100px; margin-left: 28px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;  <?php	echo $deviceRecive['ServiceDeviceInfo']['description']; 
+    <div style="height: 100px; margin-left: 28px; margin-top: 1px; display: block; font-size: 10px;">NOTE :&nbsp;<?php	echo $deviceRecive['ServiceDeviceInfo']['description']; 
 	//pr();
 	
 	?> </div>
     <div class="inovice_fotter">
-    <span><?php echo $deviceRecive['User']['counter_name'];?> &nbsp; &nbsp;<?php echo date('d/m/y');?></span>
+    <span><?php echo $deviceRecive['UserCreated']['counter_name'];?> &nbsp; &nbsp;<?php echo date('d/m/y');?></span>
     <span></span>
           </div>  
         	
     </div>
+   	 </div>
        <style type="text/css">
-	   .prevnto_grid{
-		   	border: 0 none;
-    		font-size: 10px;
-		    margin: 10px 15px 0 29px;
-    		text-transform: uppercase;
-    		width: 92%;
-	   }
-	   	   .prevnto_grid tr td{
-			   border-bottom:1px solid;
-			   width:25%;
-		   }
+	   html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: inherit;
+	vertical-align: baseline;
+}
+/* remember to define focus styles! */
+:focus {
+	outline:none;border-color:#2aa4cb;box-shadow:0 0 5px 0 #2aa4cb;outline:none
+}
+
+html, body {
+	height:100%;
+	width:100%;
+}
+
+body {
+	line-height: 1;
+	color: black;
+	background: white;
+	font-family:Arial,Verdana,Sans-Serif;
+	font-size:0.8em;
+}
+ol, ul {
+	list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+caption, th, td {
+	text-align: left;
+
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: "";
+}
+blockquote, q {
+	quotes: "" "";
+}
+
+.float-left {
+	float:left;
+}
+
+.float-right {
+	float:right;
+}
+
+.float-none {
+	float:none!important;
+}
+
+.full-link {
+	float:none!important;
+	margin:0 0 8px!important;
+}
+
+.width50 {
+	width:49%;
+}
+
+.clear, .clearfix {
+	clear:both;
+}
+
+#page_wrapper {
+ }
+
+p {
+	line-height:1.6em;
+	padding:5px 0 10px 5px;
+	font-size:1.1em;
+}
+		.prevnto_grid{
+			border: 0 none;
+			font-size: 10px;
+			margin: 10px 15px 0 29px;
+			text-transform: uppercase;
+			width: 92%;
+		}
+		.prevnto_grid tr td{
+			border-bottom:1px solid;
+			width:25%;
+		}
 		.inovice_fotter{
- 			bottom: 0;
+			bottom: 0;
 			height: 14px;
-			margin-top: -11px;
-			padding-left: 47px;
+			margin-top: -21px;
+			padding-left: 50px;
 			position: unset;
 			width: 309px;
 			text-transform: none !important;
-			
 		}
 		.inovice_fotter span{
 			float:left;
@@ -188,20 +274,29 @@
 			width:49%;
 			text-align:center;
 		}
-	 
+		
 		.sec_div_wrapper {
 			border: 1px solid;
 			font-size: 8px;
 			height: 553px;
 			width: 795px;
-			background:url("../../app/webroot/img/iripair_invoice.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+	
 		}
-		.sec_div_wrapper div{
+		.bg_div{
+			_background:url("../../app/webroot/img/iripair_invoice.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    height: 553px;
+    margin-top: 14px;
+    position: absolute;
+    top: 0;
+    width: 795px;
+    z-index: 999;
+		}
+		.print_left div , .print_right div{
 			font-size:11px !important;
-			margin-left:30px;
-		   text-transform: uppercase;
+			margin-left:32px !important;
+			text-transform: uppercase;
 		}
-		 
+		
 		.title_s{
 			width:100px;
 			display:inline-block;
@@ -209,27 +304,29 @@
 			height:18px;
 		}
 		.barcode{
-			    height: 65px;
-    margin-bottom: 134px;
-    margin-left: -3px;
-    width: 152px;
-	margin-top:14px;
+			height: 65px;
+			margin-bottom: 127px;
+			margin-left: -3px;
+			width: 152px;
+			margin-top:14px;
 		}
 		.print_left{
-		    float: left;
-    margin: 0 !important;
-	width:49%;
+			float: left;
+ 			width:49%;
 		}
 		.print_right{
-		    float: left;
-    margin: 0 !important;
-	width:49%;
+			float: left;
+			margin: 0 !important;
+			width:49%;
 		}
 		.print_right   div{
 			margin-left:25px !important;
 		}
 		.print_right .prevnto_grid{
 			margin-left:26px !important;
+		}
+		.iripairbackground{
+			z-index:99;
 		}
 
 		</style>

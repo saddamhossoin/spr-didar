@@ -487,3 +487,16 @@ label[for = AssesmentInventorycheckQuantity]{
 #ServiceDeviceInfoFinalNote{
 	width:950px !important;
 }
+#view_checklist12 {
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #d7d7d7;
+    border-radius: 5px;
+    color: #036fad;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 3px 7px;
+    position: relative;
+}

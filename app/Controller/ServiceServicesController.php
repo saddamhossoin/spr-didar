@@ -231,10 +231,10 @@ class ServiceServicesController extends AppController {
 	}
 	
 	function getServiceInfo( $id = null){
-		$this->loadModel('ServiceDevicesService');
+		$this->loadModel('ServiceService');
 		$this->autoRender = false;
-		 
-		return $this->ServiceDevicesService->find('first',array('conditions'=>array('ServiceDevicesService.service_service_id'=>$id)));
+		 $this->ServiceService->recursive=-1;
+		return $this->ServiceService->find('first',array('conditions'=>array('ServiceService.id'=>$id)));
 		Configure::write('debug', 0); 
 		exit();
  	}	

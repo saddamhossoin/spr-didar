@@ -114,3 +114,7 @@
 #ServiceDeviceInfoSerialNo{
 	float:left !important;
 }
+#WrapperReciveImage input{
+	   float: left;
+    width: 79%;
+}

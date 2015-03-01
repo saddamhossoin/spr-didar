@@ -33,8 +33,7 @@ class UsersController extends AppController {
  			$this->User->recursive = -1;
 			$response = $this->User->find( 'first', array('fields'=>array('email_address','name','phone','piva','address'),'conditions' => array('User.id ='.$id)) );
  			echo json_encode($response);
- 			
-			exit();
+ 			exit();
 		}
      }
 	 
@@ -592,7 +591,7 @@ class UsersController extends AppController {
     public function login() {
 		if ($this->request->is('post')) {
  			if ($this->Auth->login()) {
-				$this->redirect(array('action' => 'admindashboard'));
+ 				$this->redirect(array('action' => 'admindashboard'));
 			} else {
 				$this->setFlashMessage(__('Invalid username or password, try again'), 'error');
 			}
@@ -642,6 +641,7 @@ class UsersController extends AppController {
 	 * This is the dashboard, user area home.
 	 */
 	public function admindashboard() {
+	//pr($this->Session->read('Permissions'));die();
 		    if($this->Session->read('groupname') == 'SuperAdmin'){
 				$this->redirect(array('action' => 'dashboard'));
 			}
@@ -660,8 +660,8 @@ class UsersController extends AppController {
 		 else if($this->Session->read('groupname') == 'Customer'){
 				$this->redirect(array('action' => 'userdashboard'));
 			}
-		 else if($this->Session->read('groupname') == 'Front_User'){
-				$this->redirect(array('action' => 'userdashboard'));
+		 else if($this->Session->read('groupname') == 'Front_Desk'){
+				$this->redirect(array('controller'=>'ServiceDeviceInfos','action' => 'index'));
 			}
 		 
 		 	
@@ -726,11 +726,7 @@ class UsersController extends AppController {
 	}
 	
 	public function userdashboard() {
-	    
-	  
-		
-	
-		$this->set('page_titles', 'Client Dashboard'); 
+ 		$this->set('page_titles', 'Client Dashboard'); 
 		$this->layout = 'client_layout';
 	}
 	
@@ -874,7 +870,7 @@ class UsersController extends AppController {
 	
   //=================User satatus active inactive===============//
   
-  //=========================Online User dashboard===============//
+  //=========================Online User dashboard===============http://iripair.org/users/reset/4e455da082506a1f8080d5f62a70af406a2d5dc475fd9e67ce4e281dd628660794654be4345d49576e110b463b7d42867412a2c3893a1fac73dee8b1595b5910//
     public function online_user_dashboard(){
 	  $this->layout="wpage";
 	}
@@ -1086,40 +1082,45 @@ true), 'fail_message');
 //=======================end forget password=================//
 
 //================reset password================//
-	  function reset($token=null){ 
+	  function reset( $token = null){ 
 	
 	 	$this->User->recursive=-1;
-		if ($this->RequestHandler->isAjax()) {
-	 	if ($this->request->is('post') || $this->request->is('put')) {
+		// Configure::write('debug', 2); 
+		
+	 	if ($this->request->is('post')) {
+		 
 		        if(!empty($this->request->data)){
     				 $this->User->id =  $this->request->data['User']['id'];
+					 
                          if($this->User->saveField('password',$this->request->data['User']['password']))
                         {  
-                        	echo 1;
-							//$this->redirect(array('/'));
+                        	if ($this->Auth->login()) {
+ 									$this->redirect(array('action' => 'admindashboard'));
+								}  
 						}
 						else{
-						
 							echo 2;
-							//$this->Session->setFlash(__('Password Updated Failed! Please try again.',true), 'fail_message');		
-                  			//	 $this->Session->setFlash('Password Updated Failed! Please try again.');
- 						}
+						}
                  }
 		 		}
-				 }
+				 
 		else{
+		 
          if(!empty($token)){
 			 $u=$this->User->findBytokenhash($token);
             	if($u){
 		    		 $this->request->data = $u;
-				}
+ 				}
             	else
             		{
         			$this->Session->setFlash(__('Token Corrupted,,Please Retry.the reset link work only for once.',true), 'fail_message');		
            			}
 				}
 				else
-				{	 	}
+				{
+					$this->Session->setFlash(__('Token Corrupted,,Please Retry.the reset link work only for once.',true), 'fail_message');		
+					//$this->redirect(array('controller'=>'pages','action'=>'home'));	
+				}
 			}
 			 
 		 	 	$this->layout = 'wpage';
